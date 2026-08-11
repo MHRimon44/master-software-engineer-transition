@@ -1,10 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.formatPaymentResult = formatPaymentResult;
-//   | {
-//       status: "CANCELLED";
-//       reason: string;
-//     };
 const successResult = {
     status: "SUCCESS",
     transactionId: "TXN-1001",
@@ -15,10 +11,10 @@ const failedResult = {
     errorCode: "PAYMENT_DECLINED",
     message: "Card was declined",
 };
-// const cancelledResult: PaymentResult = {
-//   status: "CANCELLED",
-//   reason: "user cancelled payment",
-// };
+const cancelledResult = {
+    status: "CANCELLED",
+    reason: "user cancelled payment",
+};
 // const invalidResult: PaymentResult = {
 //   status: "SUCCESS",
 //   errorCode: "FAILED",
@@ -33,8 +29,8 @@ function formatPaymentResult(result) {
             return `Payment successful. Transaction: ${result.transactionId}, Amount: ${result.amount}`;
         case "FAILED":
             return `Payment failed. Error: ${result.errorCode}, Message: ${result.message}`;
-        // case "CANCELLED":
-        //   return `Payment cancelled. Reason: ${result.reason}`;
+        case "CANCELLED":
+            return `Payment cancelled. Reason: ${result.reason}`;
         default:
             return assertNever(result);
     }
