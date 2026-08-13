@@ -1,6 +1,3 @@
-import { Customer } from "./customer";
-import { Order } from "./order";
-
 type PaginatedResult<T> = {
   pageNo: number;
   totalPages: number;
@@ -10,11 +7,6 @@ type ApiResponse<T> = {
   status: boolean;
   message: string;
   data: T;
-};
-type Product = {
-  id: number;
-  name: string;
-  price: number;
 };
 
 const ProductsResponse: ApiResponse<Product[]> = {
@@ -95,3 +87,34 @@ console.log(productRepository.getAll());
 
 const products = productRepository.getAll();
 products.pop();
+
+type RequireFields<T, K extends keyof T> = Omit<T, K> & Required<Pick<T, K>>;
+
+type Product = {
+  id: number;
+  name?: string;
+  price?: number;
+  stock?: number;
+};
+
+type ProductInput = RequireFields<Product, "name" | "price">;
+
+function bubbleSort(nums: number[]): number[] {
+  const result = [...nums];
+
+  for (let i = 0; i < result.length; i++) {
+    for (let j = 0; j < result.length - 1 - i; j++) {
+      const current = result[j];
+      const next = result[j + 1];
+
+      if (current !== undefined && next !== undefined && current > next) {
+        result[j] = next;
+        result[j + 1] = current;
+      }
+    }
+  }
+
+  return result;
+}
+
+console.log(bubbleSort([5, 2, 8, 1, 3]));

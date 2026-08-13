@@ -54,4 +54,19 @@ console.log(productRepository.getById(1));
 console.log(productRepository.getAll());
 const products = productRepository.getAll();
 products.pop();
+function bubbleSort(nums) {
+    const result = [...nums];
+    for (let i = 0; i < result.length; i++) {
+        for (let j = 0; j < result.length - 1 - i; j++) {
+            const current = result[j];
+            const next = result[j + 1];
+            if (current !== undefined && next !== undefined && current > next) {
+                result[j] = next;
+                result[j + 1] = current;
+            }
+        }
+    }
+    return result;
+}
+console.log(bubbleSort([5, 2, 8, 1, 3]));
 //# sourceMappingURL=generics.js.map
