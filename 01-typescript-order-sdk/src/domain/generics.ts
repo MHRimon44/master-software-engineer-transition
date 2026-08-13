@@ -1,13 +1,4 @@
-type PaginatedResult<T> = {
-  pageNo: number;
-  totalPages: number;
-  data: T[];
-};
-type ApiResponse<T> = {
-  status: boolean;
-  message: string;
-  data: T;
-};
+import type { ApiResponse, PaginatedResult } from "../shared";
 
 const ProductsResponse: ApiResponse<Product[]> = {
   status: true,
@@ -118,3 +109,119 @@ function bubbleSort(nums: number[]): number[] {
 }
 
 console.log(bubbleSort([5, 2, 8, 1, 3]));
+
+async function request<T>(url: string): Promise<ApiResponse<T>> {
+  console.log(`Requesting: ${url}`);
+
+  // simulate API response
+  return {
+    status: true,
+    message: "Success",
+    data: [] as T,
+  };
+}
+
+async function main() {
+  const response = await request<Product[]>("/products");
+
+  console.log(response.status);
+  console.log(response.message);
+  console.log(response.data);
+}
+
+main();
+
+function getErrorMessage(error: unknown): string {
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  if (typeof error === "string") {
+    return error;
+  }
+
+  return "Unknown error";
+}
+console.log(getErrorMessage(new Error("Network failed")));
+console.log(getErrorMessage("Timeout"));
+console.log(getErrorMessage({ code: 500 }));
+
+// class ApiClient {
+//   async post<TRequest, TResponse>(
+//     url: string,
+//     body: TRequest,
+//   ): Promise<ApiResponse<TResponse>> {
+//     console.log(`POST ${url}`);
+//     console.log("Body:", body);
+
+//     return {
+//       status: true,
+//       message: "Created successfully",
+//       data: {} as TResponse,
+//     };
+//   }
+// }
+
+// async function testApiClient() {
+//   const client = new ApiClient();
+
+//   const productsResponse = await client.get<Product[]>("/products");
+
+//   console.log(productsResponse.data);
+// }
+
+// testApiClient();
+
+// async function createProduct() {
+//   const client = new ApiClient();
+
+//   const response = await client.post<ProductInput, Product>("/products", {
+//     id: 101,
+//     name: "Cotton Shirt",
+//     price: 1200,
+//   });
+
+//   console.log(response.data);
+// }
+
+// createProduct();
+class ApiClient {
+  async get<T>(url: string): Promise<ApiResponse<T>> {
+    console.log(`GET ${url}`);
+
+    return {
+      status: true,
+      message: "Success",
+      data: [] as T,
+    };
+  }
+
+  async post<TRequest, TResponse>(
+    url: string,
+    body: TRequest,
+  ): Promise<ApiResponse<TResponse>> {
+    console.log(`POST ${url}`);
+    console.log("Body:", body);
+
+    return {
+      status: true,
+      message: "Created successfully",
+      data: {} as TResponse,
+    };
+  }
+}
+
+async function createProduct() {
+  const client = new ApiClient();
+
+  const response = await client.post<ProductInput, Product>("/products", {
+    id: 101,
+    name: "Cotton Shirt",
+    price: 1200,
+  });
+
+  console.log(response);
+  console.log(response.data);
+}
+
+createProduct();

@@ -8,6 +8,13 @@
     "moduleResolution": "NodeNext",
     "types": ["node"],
 
+    "paths": {
+      "@domain/*": ["./src/domain/*"],
+      "@api/*": ["./src/api/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@errors/*": ["./src/errors/*"]
+    },
+
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
