@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.isApiError = isApiError;
-function isApiError(value) {
+export function isApiError(value) {
     if (typeof value !== "object" || value === null) {
         return false;
     }

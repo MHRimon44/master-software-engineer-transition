@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const ProductsResponse = {
     status: true,
     message: "Products fetched successfully",
@@ -157,4 +155,5 @@ async function createProduct() {
     console.log(response.data);
 }
 createProduct();
+export {};
 //# sourceMappingURL=generics.js.map

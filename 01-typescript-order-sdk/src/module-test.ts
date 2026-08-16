@@ -1,8 +1,6 @@
-import { ApiClient } from "./api/api-client";
-
-import type { Product } from "./domain/product";
-
-import type { ApiResponse } from "./shared";
+import { ApiClient } from "@api/api-client.js";
+import { Product } from "@domain/product.js";
+import { ApiResponse } from "@shared/api-response.js";
 
 async function main() {
   const client = new ApiClient();

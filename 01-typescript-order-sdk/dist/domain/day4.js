@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 async function fetchOrder() {
     return {
         id: 101,
@@ -62,4 +60,5 @@ async function main() {
     await testRetryFailure();
 }
 main();
+export {};
 //# sourceMappingURL=day4.js.map

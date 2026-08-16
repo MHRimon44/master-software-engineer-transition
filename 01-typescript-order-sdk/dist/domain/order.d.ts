@@ -1,5 +1,5 @@
-import type { OrderItem } from "./order-item";
-import type { PaymentStatus } from "./payment";
+import { OrderItem } from "./order-item.js";
+import { PaymentStatus } from "./payment.js";
 export interface Order {
     readonly id: number;
     readonly customerId: number;

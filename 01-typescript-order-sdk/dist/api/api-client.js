@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ApiClient = void 0;
-class ApiClient {
+export class ApiClient {
     async get(url) {
         console.log(`GET ${url}`);
         return {
@@ -20,5 +17,4 @@ class ApiClient {
         };
     }
 }
-exports.ApiClient = ApiClient;
 //# sourceMappingURL=api-client.js.map

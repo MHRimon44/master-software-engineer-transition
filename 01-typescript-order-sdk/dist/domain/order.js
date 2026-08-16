@@ -1,6 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.calculateOrderTotal = calculateOrderTotal;
 const order = {
     id: 1,
     customerId: 10,
@@ -14,7 +11,7 @@ const order = {
     ],
     paymentStatus: "PAID",
 };
-function calculateOrderTotal(order) {
+export function calculateOrderTotal(order) {
     return order.items.reduce((total, item) => {
         return total + item.unitPrice * item.quantity;
     }, 0);

@@ -1,8 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const api_client_1 = require("./api/api-client");
+import { ApiClient } from "@api/api-client.js";
 async function main() {
-    const client = new api_client_1.ApiClient();
+    const client = new ApiClient();
     const response = await client.get("/products");
     console.log(response.status);
     console.log(response.message);

@@ -1,6 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.formatPaymentResult = formatPaymentResult;
 const successResult = {
     status: "SUCCESS",
     transactionId: "TXN-1001",
@@ -23,7 +20,7 @@ const cancelledResult = {
 function assertNever(value) {
     throw new Error(`Unhandled payment result: ${JSON.stringify(value)}`);
 }
-function formatPaymentResult(result) {
+export function formatPaymentResult(result) {
     switch (result.status) {
         case "SUCCESS":
             return `Payment successful. Transaction: ${result.transactionId}, Amount: ${result.amount}`;

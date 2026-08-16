@@ -1,4 +1,4 @@
-import type { ApiResponse } from "../shared";
+import type { ApiResponse } from "../shared/index.js";
 
 export class ApiClient {
   async get<T>(url: string): Promise<ApiResponse<T>> {

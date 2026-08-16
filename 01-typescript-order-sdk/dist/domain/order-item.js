@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const orderItem = {
     productId: 101,
     productName: "Cotton Shirt",
@@ -10,4 +8,5 @@ function calculateItemTotal(item) {
     return item.unitPrice * item.quantity;
 }
 console.log(calculateItemTotal(orderItem));
+export {};
 //# sourceMappingURL=order-item.js.map

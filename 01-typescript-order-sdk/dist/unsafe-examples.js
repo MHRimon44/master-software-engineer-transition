@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 // 1. Implicit any
 function calculateDiscount(price) {
     return price * 0.1;
@@ -49,4 +47,5 @@ catch (error) {
 const json = `{"price":"wrong"}`;
 const parsed = JSON.parse(json);
 console.log(parsed.price * 2);
+export {};
 //# sourceMappingURL=unsafe-examples.js.map

@@ -1,4 +1,4 @@
-import type { ApiResponse, PaginatedResult } from "../shared";
+import { ApiResponse, PaginatedResult } from "@shared/api-response.js";
 
 const ProductsResponse: ApiResponse<Product[]> = {
   status: true,

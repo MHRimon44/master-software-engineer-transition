@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.formatValue = formatValue;
-function formatValue(value) {
+export function formatValue(value) {
     if (typeof value === "string") {
         return value.toUpperCase();
     }
