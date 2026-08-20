@@ -1,0 +1,45 @@
+import { copyLargeFile, verifyCopiedFile } from "./stream-copy.js";
+import { fetchWithTimeout, RequestTimeoutError } from "./cancellable-fetch.js";
+async function runStreamExample() {
+    console.log("\n--- STREAM COPY ---");
+    try {
+        const result = await copyLargeFile("./sample/large-file.txt", "./output/copied-file.txt");
+        console.log(`Bytes processed: ${result.bytesProcessed}`);
+        console.log(`Duration: ${result.durationMs.toFixed(2)}ms`);
+        const isValid = await verifyCopiedFile("./sample/large-file.txt", "./output/copied-file.txt");
+        console.log(`Copy verification: ${isValid ? "SUCCESS" : "FAILED"}`);
+    }
+    catch (error) {
+        console.error("Stream copy failed:", error);
+    }
+}
+async function runFetchExample() {
+    console.log("\n--- CANCELLABLE FETCH ---");
+    try {
+        const result = await fetchWithTimeout("https://jsonplaceholder.typicode.com/todos/1", 5000);
+        console.log("HTTP status:", result.status);
+        console.log(`Request duration: ${result.durationMs.toFixed(2)}ms`);
+        console.log("Response data:");
+        console.log(result.data);
+    }
+    catch (error) {
+        if (error instanceof RequestTimeoutError) {
+            console.error(`Request timed out after ${error.timeoutMS}ms`);
+            return;
+        }
+        if (error instanceof Error) {
+            console.error("Request failed:", error.message);
+            return;
+        }
+        console.error("Unknown error occurred");
+    }
+}
+async function main() {
+    await runStreamExample();
+    await runFetchExample();
+}
+main().catch((error) => {
+    console.error("Application failed:", error);
+    process.exitCode = 1;
+});
+//# sourceMappingURL=index.js.map
