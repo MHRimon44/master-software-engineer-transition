@@ -16,7 +16,7 @@ async function runStreamExample() {
 async function runFetchExample() {
     console.log("\n--- CANCELLABLE FETCH ---");
     try {
-        const result = await fetchWithTimeout("https://jsonplaceholder.typicode.com/todos/1", 5000);
+        const result = await fetchWithTimeout("https://httpbin.org/delay/5", 1000);
         console.log("HTTP status:", result.status);
         console.log(`Request duration: ${result.durationMs.toFixed(2)}ms`);
         console.log("Response data:");
