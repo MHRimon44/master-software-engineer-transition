@@ -29,6 +29,6 @@
     "skipLibCheck": true
   },
 
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/day16/worker.js"],
   "exclude": ["node_modules", "dist"]
 }
