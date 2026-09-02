@@ -1,14 +1,19 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
 import { AppController } from './app.controller';
+import { AppLifecycleService } from './app-lifecycle.service';
 import { AppService } from './app.service';
+import { RequestIdMiddleware } from './common/middleware/request-id.middleware';
+import { AppConfigModule } from './config/app-config.module';
 import { loadAppConfig } from './config/app.config';
 import { ProjectsModule } from './projects/projects.module';
 import { TasksModule } from './tasks/tasks.module';
 import { UsersModule } from './users/users.module';
-import { AppConfigModule } from './config/app-config.module';
-import { AppLifecycleService } from './app-lifecycle.service';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
+import { RequestTimingInterceptor } from './common/interceptors/request-timing.interceptor';
+import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -25,6 +30,21 @@ import { AppLifecycleService } from './app-lifecycle.service';
     AppConfigModule,
   ],
   controllers: [AppController],
-  providers: [AppService, AppLifecycleService],
+  providers: [
+    AppService,
+    AppLifecycleService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: RequestTimingInterceptor,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: AllExceptionsFilter,
+    },
+  ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): void {
+    consumer.apply(RequestIdMiddleware).forRoutes('*');
+  }
+}

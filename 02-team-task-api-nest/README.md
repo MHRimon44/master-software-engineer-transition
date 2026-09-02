@@ -56,3 +56,21 @@ Examples:
 Tradeoff: Nest's default DTO validation returns an array of messages,
 while the custom pipe currently returns one string message. The top-level
 error fields and HTTP status remain predictable.
+
+## NestJS Request Pipeline
+
+| Tool             | Main Responsibility                                        | Example in This Project                               |
+| ---------------- | ---------------------------------------------------------- | ----------------------------------------------------- |
+| Middleware       | Pre-routing request concerns                               | Generate/propagate `x-request-id`                     |
+| Guard            | Decide whether a request may proceed                       | Require `x-user-id` for protected routes              |
+| Pipe             | Validate or transform input                                | Validate DTOs and convert task ID to positive integer |
+| Interceptor      | Wrap request/response execution for cross-cutting behavior | Measure request duration and log timing               |
+| Exception Filter | Catch exceptions and produce consistent failures           | Standard error envelope with `requestId`              |
+
+### Decision Rules
+
+- Need something for almost every incoming request before routing? → **Middleware**
+- Need to decide whether the request is allowed? → **Guard**
+- Need to validate or transform controller input? → **Pipe**
+- Need behavior around controller execution, such as timing/logging? → **Interceptor**
+- Need centralized exception-to-response handling? → **Exception Filter**
