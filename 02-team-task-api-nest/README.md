@@ -760,3 +760,16 @@ This project currently demonstrates:
 - safe exception handling
 - predictable REST response contracts
 - deliberate HTTP status code semantics
+
+## API Versioning Strategy
+
+The current API remains unversioned while its contracts are still evolving in the learning project.
+
+Backward-compatible changes, such as adding optional response fields, do not automatically require a new API version.
+
+Breaking contract changes should be introduced deliberately using path-based versioning, for example:
+
+```text
+/api/v1/tasks
+/api/v2/tasks
+```
