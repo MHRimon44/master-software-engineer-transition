@@ -14,6 +14,7 @@ import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { RequestTimingInterceptor } from './common/interceptors/request-timing.interceptor';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 import { ResponseEnvelopeInterceptor } from './common/interceptors/response-envelope.interceptor';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { ResponseEnvelopeInterceptor } from './common/interceptors/response-enve
     UsersModule,
     ProjectsModule,
     TasksModule,
+    AuthModule,
     AppConfigModule,
   ],
   controllers: [AppController],

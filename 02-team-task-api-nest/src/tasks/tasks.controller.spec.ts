@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
+import { AccessTokenGuard } from '../auth/access-token.guard';
 import { TasksController } from './tasks.controller';
 import { TasksService } from './tasks.service';
 
@@ -13,6 +14,10 @@ describe('TasksController', () => {
     update: jest.fn(),
   };
 
+  const accessTokenGuardMock = {
+    canActivate: jest.fn(() => true),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [TasksController],
@@ -22,7 +27,10 @@ describe('TasksController', () => {
           useValue: tasksServiceMock,
         },
       ],
-    }).compile();
+    })
+      .overrideGuard(AccessTokenGuard)
+      .useValue(accessTokenGuardMock)
+      .compile();
 
     controller = module.get<TasksController>(TasksController);
   });

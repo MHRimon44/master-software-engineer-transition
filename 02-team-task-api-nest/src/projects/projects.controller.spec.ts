@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
+import { AccessTokenGuard } from '../auth/access-token.guard';
 import { ProjectsController } from './projects.controller';
 import { ProjectsService } from './projects.service';
 
@@ -8,6 +9,10 @@ describe('ProjectsController', () => {
 
   const projectsServiceMock = {
     findAll: jest.fn(),
+  };
+
+  const accessTokenGuardMock = {
+    canActivate: jest.fn(() => true),
   };
 
   beforeEach(async () => {
@@ -19,7 +24,10 @@ describe('ProjectsController', () => {
           useValue: projectsServiceMock,
         },
       ],
-    }).compile();
+    })
+      .overrideGuard(AccessTokenGuard)
+      .useValue(accessTokenGuardMock)
+      .compile();
 
     controller = module.get<ProjectsController>(ProjectsController);
   });

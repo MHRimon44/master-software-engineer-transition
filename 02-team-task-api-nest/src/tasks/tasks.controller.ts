@@ -13,10 +13,12 @@ import { PositiveIntPipe } from '../common/pipes/positive-int.pipe';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { TasksService } from './tasks.service';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { MockAuthGuard } from '../auth/mock-auth.guard';
 import { TaskListQueryDto } from './dto/task-list-query.dto';
+import { AccessTokenGuard } from '../auth/access-token.guard';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
-@UseGuards(MockAuthGuard)
+@ApiBearerAuth('access-token')
+@UseGuards(AccessTokenGuard)
 @Controller('tasks')
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}

@@ -24,4 +24,11 @@ export class AppConfigService {
       infer: true,
     });
   }
+  get jwtAccessSecret(): string {
+    return this.configService.get('app.jwtAccessSecret', { infer: true });
+  }
+
+  get jwtRefreshSecret(): string {
+    return this.configService.get('app.jwtRefreshSecret', { infer: true });
+  }
 }
