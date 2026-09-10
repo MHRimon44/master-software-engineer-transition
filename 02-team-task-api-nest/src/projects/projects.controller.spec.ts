@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { AccessTokenGuard } from '../auth/access-token.guard';
+import { ProjectAccessService } from './project-access.service';
 import { ProjectsController } from './projects.controller';
 import { ProjectsService } from './projects.service';
 
@@ -9,6 +10,11 @@ describe('ProjectsController', () => {
 
   const projectsServiceMock = {
     findAll: jest.fn(),
+    create: jest.fn(),
+  };
+
+  const projectAccessServiceMock = {
+    addMembership: jest.fn(),
   };
 
   const accessTokenGuardMock = {
@@ -22,6 +28,10 @@ describe('ProjectsController', () => {
         {
           provide: ProjectsService,
           useValue: projectsServiceMock,
+        },
+        {
+          provide: ProjectAccessService,
+          useValue: projectAccessServiceMock,
         },
       ],
     })

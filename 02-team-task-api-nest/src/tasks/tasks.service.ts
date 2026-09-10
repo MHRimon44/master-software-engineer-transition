@@ -1,4 +1,9 @@
-import { Inject, Injectable } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 
 import { CLOCK, type Clock } from '../common/clock';
 import type { CreateTaskDto } from './dto/create-task.dto';
@@ -9,11 +14,15 @@ import {
   TaskStatusFilter,
 } from './dto/task-list-query.dto';
 import type { UpdateTaskDto } from './dto/update-task.dto';
+import type { ProjectTask } from './project-task';
 
 @Injectable()
 export class TasksService {
   private readonly idempotencyStore = new Map<string, unknown>();
+  private readonly projectTasks: ProjectTask[] = [];
+  private readonly projectTaskIdempotencyStore = new Map<string, ProjectTask>();
 
+  private nextProjectTaskId = 1;
   constructor(
     @Inject(CLOCK)
     private readonly clock: Clock,
@@ -117,5 +126,64 @@ export class TasksService {
       ...input,
       updatedAt: this.clock.now().toISOString(),
     };
+  }
+  createForProject(
+    projectId: number,
+    input: CreateTaskDto,
+    idempotencyKey?: string,
+  ): ProjectTask {
+    const scopedKey = idempotencyKey
+      ? `${projectId}:${idempotencyKey}`
+      : undefined;
+
+    if (scopedKey && this.projectTaskIdempotencyStore.has(scopedKey)) {
+      return this.projectTaskIdempotencyStore.get(scopedKey)!;
+    }
+
+    const now = this.clock.now().toISOString();
+
+    const task: ProjectTask = {
+      id: this.nextProjectTaskId++,
+      projectId,
+      title: input.title,
+      completed: false,
+      createdAt: now,
+    };
+
+    this.projectTasks.push(task);
+
+    if (scopedKey) {
+      this.projectTaskIdempotencyStore.set(scopedKey, task);
+    }
+
+    return task;
+  }
+
+  updateForProject(
+    projectId: number,
+    taskId: number,
+    input: UpdateTaskDto,
+  ): ProjectTask {
+    const task = this.projectTasks.find((item) => item.id === taskId);
+
+    if (!task) {
+      throw new NotFoundException('task not found');
+    }
+
+    if (task.projectId !== projectId) {
+      throw new ForbiddenException('task does not belong to this project');
+    }
+
+    if (input.title !== undefined) {
+      task.title = input.title;
+    }
+
+    if (input.completed !== undefined) {
+      task.completed = input.completed;
+    }
+
+    task.updatedAt = this.clock.now().toISOString();
+
+    return task;
   }
 }

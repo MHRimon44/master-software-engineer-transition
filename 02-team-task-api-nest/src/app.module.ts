@@ -15,7 +15,8 @@ import { RequestTimingInterceptor } from './common/interceptors/request-timing.i
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 import { ResponseEnvelopeInterceptor } from './common/interceptors/response-envelope.interceptor';
 import { AuthModule } from './auth/auth.module';
-
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -31,6 +32,14 @@ import { AuthModule } from './auth/auth.module';
     TasksModule,
     AuthModule,
     AppConfigModule,
+    ThrottlerModule.forRoot({
+      throttlers: [
+        {
+          ttl: 60_000,
+          limit: 100,
+        },
+      ],
+    }),
   ],
   controllers: [AppController],
   providers: [
@@ -47,6 +56,10 @@ import { AuthModule } from './auth/auth.module';
     {
       provide: APP_INTERCEPTOR,
       useClass: ResponseEnvelopeInterceptor,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
     },
   ],
 })

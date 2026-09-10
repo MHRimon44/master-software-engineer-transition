@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-
+import { ForbiddenException } from '@nestjs/common';
 import { CLOCK, type Clock } from '../common/clock';
 import { TasksService } from './tasks.service';
 import {
@@ -112,6 +112,36 @@ describe('TasksService', () => {
       limit: 20,
       total: 1,
       generatedAt: '2026-01-01T00:00:00.000Z',
+    });
+  });
+  it('should reject updating a task through a different project', () => {
+    const task = service.createForProject(1, {
+      title: 'project-1-task',
+    });
+
+    expect(() =>
+      service.updateForProject(2, task.id, {
+        title: 'cross-project-update',
+      }),
+    ).toThrow(ForbiddenException);
+  });
+  it('should update a task within the same project', () => {
+    const task = service.createForProject(1, {
+      title: 'original-title',
+    });
+
+    const updatedTask = service.updateForProject(1, task.id, {
+      title: 'updated-title',
+      completed: true,
+    });
+
+    expect(updatedTask).toEqual({
+      id: task.id,
+      projectId: 1,
+      title: 'updated-title',
+      completed: true,
+      createdAt: '2026-01-01T00:00:00.000Z',
+      updatedAt: '2026-01-01T00:00:00.000Z',
     });
   });
 });
