@@ -1,8 +1,10 @@
 import { ConflictException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { getRepositoryToken } from '@nestjs/typeorm';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { AppConfigService } from '../config/app-config.service';
+import { UserEntity } from '../users/user.entity';
 import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
@@ -10,7 +12,10 @@ describe('AuthService', () => {
 
   const tokenPayloads = new Map<string, Record<string, unknown>>();
 
+  const users = new Map<string, UserEntity>();
+
   let tokenSequence = 0;
+  let userSequence = 0;
 
   const jwtServiceMock = {
     signAsync: jest.fn(async (payload: Record<string, unknown>) => {
@@ -39,15 +44,62 @@ describe('AuthService', () => {
     jwtRefreshSecret: 'test-refresh-secret',
   };
 
+  const usersRepositoryMock = {
+    findOne: jest.fn(
+      async ({
+        where,
+      }: {
+        where: {
+          email?: string;
+        };
+      }) => {
+        if (!where.email) {
+          return null;
+        }
+
+        return users.get(where.email) ?? null;
+      },
+    ),
+
+    create: jest.fn((input: Partial<UserEntity>) => {
+      return {
+        ...input,
+      } as UserEntity;
+    }),
+
+    save: jest.fn(async (user: UserEntity) => {
+      userSequence++;
+
+      const savedUser = {
+        ...user,
+        id:
+          user.id ??
+          `00000000-0000-0000-0000-${String(userSequence).padStart(12, '0')}`,
+        createdAt: user.createdAt ?? new Date('2026-01-01T00:00:00.000Z'),
+      } as UserEntity;
+
+      users.set(savedUser.email, savedUser);
+
+      return savedUser;
+    }),
+  };
+
   beforeEach(async () => {
     jest.clearAllMocks();
 
     tokenPayloads.clear();
+    users.clear();
+
     tokenSequence = 0;
+    userSequence = 0;
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthService,
+        {
+          provide: getRepositoryToken(UserEntity),
+          useValue: usersRepositoryMock,
+        },
         {
           provide: JwtService,
           useValue: jwtServiceMock,
@@ -76,6 +128,21 @@ describe('AuthService', () => {
     expect(result).not.toHaveProperty('password');
 
     expect(result).not.toHaveProperty('passwordHash');
+
+    expect(usersRepositoryMock.findOne).toHaveBeenCalledWith({
+      where: {
+        email: 'user@example.com',
+      },
+    });
+
+    expect(usersRepositoryMock.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        email: 'user@example.com',
+        passwordHash: expect.any(String),
+      }),
+    );
+
+    expect(usersRepositoryMock.save).toHaveBeenCalledTimes(1);
   });
 
   it('should reject duplicate email registration', async () => {
@@ -90,6 +157,8 @@ describe('AuthService', () => {
         password: 'another-password',
       }),
     ).rejects.toBeInstanceOf(ConflictException);
+
+    expect(usersRepositoryMock.save).toHaveBeenCalledTimes(1);
   });
 
   it('should login with valid credentials and issue tokens', async () => {
@@ -175,6 +244,7 @@ describe('AuthService', () => {
       service.refresh('not-a-real-refresh-token'),
     ).rejects.toBeInstanceOf(UnauthorizedException);
   });
+
   it('should revoke refresh token on logout', async () => {
     await service.register({
       email: 'user@example.com',
@@ -194,13 +264,14 @@ describe('AuthService', () => {
       UnauthorizedException,
     );
   });
+
   it('should not issue tokens when password is incorrect', async () => {
     await service.register({
       email: 'user@example.com',
       password: 'strong-password',
     });
 
-    jest.clearAllMocks();
+    jwtServiceMock.signAsync.mockClear();
 
     await expect(
       service.login({

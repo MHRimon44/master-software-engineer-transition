@@ -1,12 +1,15 @@
+import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { ForbiddenException } from '@nestjs/common';
+
 import { CLOCK, type Clock } from '../common/clock';
-import { TasksService } from './tasks.service';
 import {
   SortDirection,
   TaskSortField,
   TaskStatusFilter,
 } from './dto/task-list-query.dto';
+import { ProjectTaskEntity } from './project-task.entity';
+import { ProjectTasksRepository } from './project-tasks.repository';
+import { TasksService } from './tasks.service';
 
 describe('TasksService', () => {
   let service: TasksService;
@@ -17,13 +20,25 @@ describe('TasksService', () => {
     now: () => fixedDate,
   };
 
+  const projectTasksRepositoryMock = {
+    create: jest.fn(),
+    findById: jest.fn(),
+    save: jest.fn(),
+  };
+
   beforeEach(async () => {
+    jest.clearAllMocks();
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         TasksService,
         {
           provide: CLOCK,
           useValue: fakeClock,
+        },
+        {
+          provide: ProjectTasksRepository,
+          useValue: projectTasksRepositoryMock,
         },
       ],
     }).compile();
@@ -114,34 +129,100 @@ describe('TasksService', () => {
       generatedAt: '2026-01-01T00:00:00.000Z',
     });
   });
-  it('should reject updating a task through a different project', () => {
-    const task = service.createForProject(1, {
-      title: 'project-1-task',
-    });
 
-    expect(() =>
-      service.updateForProject(2, task.id, {
+  it('should create a task for a project', async () => {
+    const createdTask = {
+      id: 1,
+      projectId: 1,
+      title: 'project-1-task',
+      completed: false,
+      createdAt: fixedDate,
+      updatedAt: fixedDate,
+    } as ProjectTaskEntity;
+
+    projectTasksRepositoryMock.create.mockResolvedValue(createdTask);
+
+    await expect(
+      service.createForProject(1, {
+        title: 'project-1-task',
+      }),
+    ).resolves.toEqual(createdTask);
+
+    expect(projectTasksRepositoryMock.create).toHaveBeenCalledWith(
+      1,
+      'project-1-task',
+    );
+  });
+
+  it('should reject updating a task through a different project', async () => {
+    const existingTask = {
+      id: 1,
+      projectId: 1,
+      title: 'project-1-task',
+      completed: false,
+      createdAt: fixedDate,
+      updatedAt: fixedDate,
+    } as ProjectTaskEntity;
+
+    projectTasksRepositoryMock.findById.mockResolvedValue(existingTask);
+
+    await expect(
+      service.updateForProject(2, 1, {
         title: 'cross-project-update',
       }),
-    ).toThrow(ForbiddenException);
+    ).rejects.toThrow(ForbiddenException);
+
+    expect(projectTasksRepositoryMock.save).not.toHaveBeenCalled();
   });
-  it('should update a task within the same project', () => {
-    const task = service.createForProject(1, {
-      title: 'original-title',
-    });
 
-    const updatedTask = service.updateForProject(1, task.id, {
-      title: 'updated-title',
-      completed: true,
-    });
+  it('should reject updating a task that does not exist', async () => {
+    projectTasksRepositoryMock.findById.mockResolvedValue(null);
 
-    expect(updatedTask).toEqual({
-      id: task.id,
+    await expect(
+      service.updateForProject(1, 999, {
+        title: 'missing-task',
+      }),
+    ).rejects.toThrow(NotFoundException);
+
+    expect(projectTasksRepositoryMock.save).not.toHaveBeenCalled();
+  });
+
+  it('should update a task within the same project', async () => {
+    const existingTask = {
+      id: 1,
       projectId: 1,
+      title: 'original-title',
+      completed: false,
+      createdAt: fixedDate,
+      updatedAt: fixedDate,
+    } as ProjectTaskEntity;
+
+    const savedTask = {
+      ...existingTask,
       title: 'updated-title',
       completed: true,
-      createdAt: '2026-01-01T00:00:00.000Z',
-      updatedAt: '2026-01-01T00:00:00.000Z',
+    } as ProjectTaskEntity;
+
+    projectTasksRepositoryMock.findById.mockResolvedValue(existingTask);
+
+    projectTasksRepositoryMock.save.mockResolvedValue(savedTask);
+
+    const updatedTask = await service.updateForProject(1, 1, {
+      title: 'updated-title',
+      completed: true,
     });
+
+    expect(updatedTask).toEqual(savedTask);
+
+    expect(projectTasksRepositoryMock.findById).toHaveBeenCalledWith(1);
+
+    expect(projectTasksRepositoryMock.save).toHaveBeenCalledWith(
+      expect.objectContaining({
+        id: 1,
+        projectId: 1,
+        title: 'updated-title',
+        completed: true,
+      }),
+    );
   });
 });
