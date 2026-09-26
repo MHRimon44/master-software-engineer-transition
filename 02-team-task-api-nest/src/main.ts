@@ -10,7 +10,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const appConfig = app.get(AppConfigService);
-
+  app.enableShutdownHooks();
   app.use(helmet());
 
   app.enableCors({
@@ -25,7 +25,7 @@ async function bootstrap() {
         return;
       }
 
-      callback(new Error('Origin is not allowed by CORS'), false);
+      callback(null, false);
     },
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'idempotency-key'],
@@ -43,7 +43,7 @@ async function bootstrap() {
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Team Task API')
     .setDescription('Team Task API development documentation')
-    .setVersion('1.0')
+    .setVersion('0.1.0')
     .addBearerAuth(
       {
         type: 'http',

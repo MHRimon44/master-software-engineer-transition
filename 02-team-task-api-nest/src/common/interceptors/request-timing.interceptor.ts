@@ -5,6 +5,7 @@ import {
   Logger,
   NestInterceptor,
 } from '@nestjs/common';
+import type { Response } from 'express';
 import type { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
@@ -17,14 +18,24 @@ export class RequestTimingInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
     const startedAt = Date.now();
 
-    const request = context.switchToHttp().getRequest<RequestWithId>();
+    const http = context.switchToHttp();
+
+    const request = http.getRequest<RequestWithId>();
+    const response = http.getResponse<Response>();
 
     return next.handle().pipe(
       finalize(() => {
         const durationMs = Date.now() - startedAt;
 
         this.logger.log(
-          `${request.method} ${request.url} requestId=${request.requestId} durationMs=${durationMs}`,
+          JSON.stringify({
+            event: 'http_request_completed',
+            method: request.method,
+            path: request.path,
+            statusCode: response.statusCode,
+            requestId: request.requestId,
+            durationMs,
+          }),
         );
       }),
     );

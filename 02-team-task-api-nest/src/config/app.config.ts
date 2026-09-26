@@ -4,6 +4,7 @@ export interface AppConfig {
   jwtAccessSecret: string;
   jwtRefreshSecret: string;
   corsOrigins: string[];
+  redisUrl: string;
 }
 
 export function loadAppConfig(): AppConfig {
@@ -19,7 +20,6 @@ export function loadAppConfig(): AppConfig {
   }
 
   const jwtAccessSecret = process.env.JWT_ACCESS_SECRET;
-
   const jwtRefreshSecret = process.env.JWT_REFRESH_SECRET;
 
   if (!jwtAccessSecret) {
@@ -39,11 +39,18 @@ export function loadAppConfig(): AppConfig {
     throw new Error('CORS_ORIGINS must contain at least one allowed origin');
   }
 
+  const redisUrl = process.env.REDIS_URL;
+
+  if (!redisUrl) {
+    throw new Error('REDIS_URL is required');
+  }
+
   return {
     appName,
     port,
     jwtAccessSecret,
     jwtRefreshSecret,
     corsOrigins,
+    redisUrl,
   };
 }

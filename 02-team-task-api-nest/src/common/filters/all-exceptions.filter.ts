@@ -6,7 +6,7 @@ import {
   HttpStatus,
   Logger,
 } from '@nestjs/common';
-import type { Request, Response } from 'express';
+import type { Response } from 'express';
 
 import type { RequestWithId } from '../middleware/request-id.middleware';
 
@@ -18,7 +18,6 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const context = host.switchToHttp();
 
     const request = context.getRequest<RequestWithId>();
-
     const response = context.getResponse<Response>();
 
     const status =
@@ -28,8 +27,15 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
     if (!(exception instanceof HttpException)) {
       this.logger.error(
-        `Unhandled error requestId=${request.requestId}`,
-        exception instanceof Error ? exception.stack : String(exception),
+        JSON.stringify({
+          event: 'unhandled_exception',
+          method: request.method,
+          path: request.path,
+          requestId: request.requestId,
+          error:
+            exception instanceof Error ? exception.message : 'Unknown error',
+        }),
+        exception instanceof Error ? exception.stack : undefined,
       );
     }
 

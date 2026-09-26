@@ -17,6 +17,10 @@ import { ResponseEnvelopeInterceptor } from './common/interceptors/response-enve
 import { AuthModule } from './auth/auth.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { CacheModule } from './cache/cache.module';
+import { JobsModule } from './jobs/jobs.module';
+import { NotificationsModule } from './notifications/notifications.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -32,7 +36,10 @@ import { APP_GUARD } from '@nestjs/core';
     ProjectsModule,
     TasksModule,
     AuthModule,
+    CacheModule,
     AppConfigModule,
+    JobsModule,
+    NotificationsModule,
     ThrottlerModule.forRoot({
       throttlers: [
         {

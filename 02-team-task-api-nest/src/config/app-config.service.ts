@@ -42,4 +42,10 @@ export class AppConfigService {
       infer: true,
     });
   }
+
+  get redisUrl(): string {
+    return this.configService.get('app.redisUrl', {
+      infer: true,
+    });
+  }
 }
