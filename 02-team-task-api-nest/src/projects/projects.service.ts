@@ -1,26 +1,45 @@
 import { Injectable } from '@nestjs/common';
 
+import { DataSource } from 'typeorm';
+
+import { Role } from '../auth/role';
+
 import type { CreateProjectDto } from './dto/create-project.dto';
-import type { Project } from './project';
+
+import { ProjectMembershipEntity } from './project-membership.entity';
+
+import { ProjectsRepository } from './projects.repository';
 
 @Injectable()
 export class ProjectsService {
-  private readonly projects: Project[] = [];
+  constructor(
+    private readonly projectsRepository: ProjectsRepository,
 
-  private nextProjectId = 1;
+    private readonly dataSource: DataSource,
+  ) {}
 
-  findAll(): Project[] {
-    return [...this.projects];
+  findAll() {
+    return this.projectsRepository.findAll();
   }
 
-  create(input: CreateProjectDto): Project {
-    const project: Project = {
-      id: this.nextProjectId++,
-      name: input.name,
-    };
+  create(input: CreateProjectDto, ownerUserId: string) {
+    return this.dataSource.transaction(async (manager) => {
+      const project = await this.projectsRepository.createWithManager(
+        manager,
+        input.name,
+      );
 
-    this.projects.push(project);
+      const memberships = manager.getRepository(ProjectMembershipEntity);
 
-    return project;
+      const ownerMembership = memberships.create({
+        projectId: project.id,
+        userId: ownerUserId,
+        role: Role.OWNER,
+      });
+
+      await memberships.save(ownerMembership);
+
+      return project;
+    });
   }
 }

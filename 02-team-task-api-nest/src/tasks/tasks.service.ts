@@ -14,18 +14,16 @@ import {
   TaskStatusFilter,
 } from './dto/task-list-query.dto';
 import type { UpdateTaskDto } from './dto/update-task.dto';
-import type { ProjectTask } from './project-task';
-
+import { ProjectTasksRepository } from './project-tasks.repository';
 @Injectable()
 export class TasksService {
   private readonly idempotencyStore = new Map<string, unknown>();
-  private readonly projectTasks: ProjectTask[] = [];
-  private readonly projectTaskIdempotencyStore = new Map<string, ProjectTask>();
 
-  private nextProjectTaskId = 1;
   constructor(
     @Inject(CLOCK)
     private readonly clock: Clock,
+
+    private readonly projectTasksRepository: ProjectTasksRepository,
   ) {}
 
   findAll(query: TaskListQueryDto = new TaskListQueryDto()) {
@@ -127,44 +125,20 @@ export class TasksService {
       updatedAt: this.clock.now().toISOString(),
     };
   }
-  createForProject(
+  async createForProject(
     projectId: number,
     input: CreateTaskDto,
-    idempotencyKey?: string,
-  ): ProjectTask {
-    const scopedKey = idempotencyKey
-      ? `${projectId}:${idempotencyKey}`
-      : undefined;
-
-    if (scopedKey && this.projectTaskIdempotencyStore.has(scopedKey)) {
-      return this.projectTaskIdempotencyStore.get(scopedKey)!;
-    }
-
-    const now = this.clock.now().toISOString();
-
-    const task: ProjectTask = {
-      id: this.nextProjectTaskId++,
-      projectId,
-      title: input.title,
-      completed: false,
-      createdAt: now,
-    };
-
-    this.projectTasks.push(task);
-
-    if (scopedKey) {
-      this.projectTaskIdempotencyStore.set(scopedKey, task);
-    }
-
-    return task;
+    _idempotencyKey?: string,
+  ) {
+    return this.projectTasksRepository.create(projectId, input.title);
   }
 
-  updateForProject(
+  async updateForProject(
     projectId: number,
     taskId: number,
     input: UpdateTaskDto,
-  ): ProjectTask {
-    const task = this.projectTasks.find((item) => item.id === taskId);
+  ) {
+    const task = await this.projectTasksRepository.findById(taskId);
 
     if (!task) {
       throw new NotFoundException('task not found');
@@ -182,8 +156,6 @@ export class TasksService {
       task.completed = input.completed;
     }
 
-    task.updatedAt = this.clock.now().toISOString();
-
-    return task;
+    return this.projectTasksRepository.save(task);
   }
 }

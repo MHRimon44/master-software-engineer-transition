@@ -5,11 +5,13 @@ function searchInsert(nums: number[], target: number): number {
   while (left <= right) {
     const mid = Math.floor((left + right) / 2);
 
-    if (nums[mid] === target) {
+    const value = nums[mid]!;
+
+    if (value === target) {
       return mid;
     }
 
-    if (nums[mid] < target) {
+    if (value < target) {
       left = mid + 1;
     } else {
       right = mid - 1;
@@ -20,6 +22,12 @@ function searchInsert(nums: number[], target: number): number {
 }
 
 console.log(searchInsert([1, 3, 5, 6], 5));
+
+// 2
+
 console.log(searchInsert([1, 3, 5, 6], 2));
-console.log(searchInsert([1, 3, 5, 6], 7));
-console.log(searchInsert([1, 3, 5, 6], 0));
+
+// 1
+
+// Time: O(log n)
+// Space: O(1)

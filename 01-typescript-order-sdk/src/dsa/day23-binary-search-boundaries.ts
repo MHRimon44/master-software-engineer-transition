@@ -1,53 +1,60 @@
 function findFirst(nums: number[], target: number): number {
   let left = 0;
   let right = nums.length - 1;
-  let answer = -1;
+
+  let result = -1;
 
   while (left <= right) {
-    const mid = Math.floor(left + (right - left) / 2);
+    const mid = Math.floor((left + right) / 2);
 
-    if (nums[mid] === target) {
-      answer = mid;
+    const value = nums[mid]!;
+
+    if (value === target) {
+      result = mid;
+
       right = mid - 1;
-    } else if (nums[mid] < target) {
+    } else if (value < target) {
       left = mid + 1;
     } else {
       right = mid - 1;
     }
   }
 
-  return answer;
+  return result;
 }
 
 function findLast(nums: number[], target: number): number {
   let left = 0;
   let right = nums.length - 1;
-  let answer = -1;
+
+  let result = -1;
 
   while (left <= right) {
-    const mid = Math.floor(left + (right - left) / 2);
+    const mid = Math.floor((left + right) / 2);
 
-    if (nums[mid] === target) {
-      answer = mid;
+    const value = nums[mid]!;
+
+    if (value === target) {
+      result = mid;
+
       left = mid + 1;
-    } else if (nums[mid] < target) {
+    } else if (value < target) {
       left = mid + 1;
     } else {
       right = mid - 1;
     }
   }
 
-  return answer;
+  return result;
 }
 
-function searchRange(nums: number[], target: number): number[] {
+function searchRange(nums: number[], target: number): [number, number] {
   return [findFirst(nums, target), findLast(nums, target)];
 }
 
 console.log(searchRange([5, 7, 7, 8, 8, 10], 8));
 
-console.log(searchRange([5, 7, 7, 8, 8, 10], 6));
+// [3, 4]
 
-console.log(searchRange([2, 2, 2, 2], 2));
-
-console.log(searchRange([], 2));
+// Time: O(log n)
+// Space: O(1)

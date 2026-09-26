@@ -3,19 +3,24 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
+
 import { JwtService } from '@nestjs/jwt';
+
+import { InjectRepository } from '@nestjs/typeorm';
+
 import * as bcrypt from 'bcrypt';
+
 import { randomUUID } from 'node:crypto';
 
-import { AppConfigService } from '../config/app-config.service';
-import type { LoginDto } from './dto/login.dto';
-import type { RegisterDto } from './dto/register.dto';
+import { Repository } from 'typeorm';
 
-interface StoredUser {
-  id: string;
-  email: string;
-  passwordHash: string;
-}
+import { AppConfigService } from '../config/app-config.service';
+
+import { UserEntity } from '../users/user.entity';
+
+import type { LoginDto } from './dto/login.dto';
+
+import type { RegisterDto } from './dto/register.dto';
 
 interface RefreshTokenPayload {
   sub: string;
@@ -26,42 +31,53 @@ interface RefreshTokenPayload {
 
 @Injectable()
 export class AuthService {
-  private readonly usersByEmail = new Map<string, StoredUser>();
-
   private readonly activeRefreshTokenIds = new Set<string>();
 
   constructor(
+    @InjectRepository(UserEntity)
+    private readonly usersRepository: Repository<UserEntity>,
+
     private readonly jwtService: JwtService,
+
     private readonly appConfig: AppConfigService,
   ) {}
 
   async register(input: RegisterDto) {
     const email = input.email.trim().toLowerCase();
 
-    if (this.usersByEmail.has(email)) {
+    const existingUser = await this.usersRepository.findOne({
+      where: {
+        email,
+      },
+    });
+
+    if (existingUser) {
       throw new ConflictException('email already registered');
     }
 
     const passwordHash = await bcrypt.hash(input.password, 12);
 
-    const user: StoredUser = {
-      id: randomUUID(),
+    const user = this.usersRepository.create({
       email,
       passwordHash,
-    };
+    });
 
-    this.usersByEmail.set(email, user);
+    const savedUser = await this.usersRepository.save(user);
 
     return {
-      id: user.id,
-      email: user.email,
+      id: savedUser.id,
+      email: savedUser.email,
     };
   }
 
   async login(input: LoginDto) {
     const email = input.email.trim().toLowerCase();
 
-    const user = this.usersByEmail.get(email);
+    const user = await this.usersRepository.findOne({
+      where: {
+        email,
+      },
+    });
 
     if (!user) {
       throw new UnauthorizedException('invalid email or password');
@@ -76,8 +92,6 @@ export class AuthService {
       throw new UnauthorizedException('invalid email or password');
     }
 
-    // Important:
-    // Only issue tokens AFTER credentials are verified.
     const tokens = await this.issueTokens(user);
 
     return {
@@ -85,6 +99,7 @@ export class AuthService {
         id: user.id,
         email: user.email,
       },
+
       tokens,
     };
   }
@@ -113,14 +128,16 @@ export class AuthService {
 
     const email = payload.email.trim().toLowerCase();
 
-    const user = this.usersByEmail.get(email);
+    const user = await this.usersRepository.findOne({
+      where: {
+        email,
+      },
+    });
 
     if (!user || user.id !== payload.sub) {
       throw new UnauthorizedException('invalid or expired refresh token');
     }
 
-    // Refresh-token rotation:
-    // old token becomes invalid.
     this.activeRefreshTokenIds.delete(payload.jti);
 
     return this.issueTokens(user);
@@ -147,7 +164,7 @@ export class AuthService {
     this.activeRefreshTokenIds.delete(payload.jti);
   }
 
-  private async issueTokens(user: StoredUser) {
+  private async issueTokens(user: UserEntity) {
     const refreshTokenId = randomUUID();
 
     const [accessToken, refreshToken] = await Promise.all([
@@ -159,6 +176,7 @@ export class AuthService {
         },
         {
           secret: this.appConfig.jwtAccessSecret,
+
           expiresIn: '15m',
         },
       ),
@@ -172,6 +190,7 @@ export class AuthService {
         },
         {
           secret: this.appConfig.jwtRefreshSecret,
+
           expiresIn: '7d',
         },
       ),

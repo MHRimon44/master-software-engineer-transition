@@ -1,6 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-
+import { DatabaseModule } from './database/database.module';
 import { AppController } from './app.controller';
 import { AppLifecycleService } from './app-lifecycle.service';
 import { AppService } from './app.service';
@@ -27,6 +27,7 @@ import { APP_GUARD } from '@nestjs/core';
         }),
       ],
     }),
+    DatabaseModule,
     UsersModule,
     ProjectsModule,
     TasksModule,

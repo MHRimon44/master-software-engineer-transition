@@ -20,7 +20,7 @@ export class ProjectRolesGuard implements CanActivate {
     private readonly projectAccessService: ProjectAccessService,
   ) {}
 
-  canActivate(context: ExecutionContext): boolean {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     const requiredPermissions = this.reflector.getAllAndOverride<
       ProjectPermission[]
     >(PERMISSIONS_KEY, [context.getHandler(), context.getClass()]);
@@ -39,7 +39,7 @@ export class ProjectRolesGuard implements CanActivate {
       throw new BadRequestException('projectId must be a positive integer');
     }
 
-    const membership = this.projectAccessService.findMembership(
+    const membership = await this.projectAccessService.findMembership(
       projectId,
       request.user.id,
     );
