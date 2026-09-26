@@ -9,13 +9,15 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { PositiveIntPipe } from '../common/pipes/positive-int.pipe';
-import { CreateTaskDto } from './dto/create-task.dto';
-import { TasksService } from './tasks.service';
-import { UpdateTaskDto } from './dto/update-task.dto';
-import { TaskListQueryDto } from './dto/task-list-query.dto';
-import { AccessTokenGuard } from '../auth/access-token.guard';
 import { ApiBearerAuth, ApiHeader, ApiParam } from '@nestjs/swagger';
+
+import { AccessTokenGuard } from '../auth/access-token.guard';
+import { PositiveIntPipe } from '../common/pipes/positive-int.pipe';
+import { validateIdempotencyKey } from '../common/validation/idempotency-key';
+import { CreateTaskDto } from './dto/create-task.dto';
+import { TaskListQueryDto } from './dto/task-list-query.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
+import { TasksService } from './tasks.service';
 
 @ApiBearerAuth('access-token')
 @UseGuards(AccessTokenGuard)
@@ -44,14 +46,14 @@ export class TasksController {
     required: false,
     example: 'create-task-abc-123',
     description:
-      'Optional key used to make repeated create requests deterministic',
+      'Optional idempotency key with a maximum length of 128 characters',
   })
   create(
     @Body() dto: CreateTaskDto,
     @Headers('idempotency-key')
     idempotencyKey?: string,
   ) {
-    const normalizedKey = idempotencyKey?.trim() || undefined;
+    const normalizedKey = validateIdempotencyKey(idempotencyKey);
 
     return this.tasksService.create(dto, normalizedKey);
   }

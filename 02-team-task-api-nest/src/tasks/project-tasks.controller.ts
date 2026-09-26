@@ -8,14 +8,16 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiHeader, ApiParam } from '@nestjs/swagger';
-import { UpdateTaskDto } from './dto/update-task.dto';
+
 import { AccessTokenGuard } from '../auth/access-token.guard';
-import { PositiveIntPipe } from '../common/pipes/positive-int.pipe';
-import { ProjectRolesGuard } from '../projects/project-roles.guard';
-import { CreateTaskDto } from './dto/create-task.dto';
-import { TasksService } from './tasks.service';
 import { ProjectPermission } from '../auth/project-permission';
 import { RequirePermissions } from '../auth/permissions.decorator';
+import { PositiveIntPipe } from '../common/pipes/positive-int.pipe';
+import { validateIdempotencyKey } from '../common/validation/idempotency-key';
+import { ProjectRolesGuard } from '../projects/project-roles.guard';
+import { CreateTaskDto } from './dto/create-task.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
+import { TasksService } from './tasks.service';
 
 @ApiBearerAuth('access-token')
 @Controller('projects/:projectId/tasks')
@@ -35,7 +37,7 @@ export class ProjectTasksController {
     required: false,
     example: 'create-project-task-abc-123',
     description:
-      'Optional key used to make repeated create requests deterministic',
+      'Optional idempotency key with a maximum length of 128 characters',
   })
   create(
     @Param('projectId', PositiveIntPipe)
@@ -44,10 +46,11 @@ export class ProjectTasksController {
     @Headers('idempotency-key')
     idempotencyKey?: string,
   ) {
-    const normalizedKey = idempotencyKey?.trim() || undefined;
+    const normalizedKey = validateIdempotencyKey(idempotencyKey);
 
     return this.tasksService.createForProject(projectId, dto, normalizedKey);
   }
+
   @Patch(':id')
   @UseGuards(AccessTokenGuard, ProjectRolesGuard)
   @RequirePermissions(ProjectPermission.UPDATE_TASK)

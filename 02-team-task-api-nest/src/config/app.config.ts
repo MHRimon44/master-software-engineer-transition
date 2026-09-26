@@ -3,6 +3,7 @@ export interface AppConfig {
   port: number;
   jwtAccessSecret: string;
   jwtRefreshSecret: string;
+  corsOrigins: string[];
 }
 
 export function loadAppConfig(): AppConfig {
@@ -16,6 +17,7 @@ export function loadAppConfig(): AppConfig {
   if (!Number.isInteger(port) || port <= 0) {
     throw new Error('PORT must be a positive integer');
   }
+
   const jwtAccessSecret = process.env.JWT_ACCESS_SECRET;
 
   const jwtRefreshSecret = process.env.JWT_REFRESH_SECRET;
@@ -27,10 +29,21 @@ export function loadAppConfig(): AppConfig {
   if (!jwtRefreshSecret) {
     throw new Error('JWT_REFRESH_SECRET is required');
   }
+
+  const corsOrigins = (process.env.CORS_ORIGINS ?? '')
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+
+  if (corsOrigins.length === 0) {
+    throw new Error('CORS_ORIGINS must contain at least one allowed origin');
+  }
+
   return {
     appName,
     port,
     jwtAccessSecret,
     jwtRefreshSecret,
+    corsOrigins,
   };
 }
