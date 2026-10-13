@@ -1,61 +1,64 @@
--- DAY 32: CORE SQL CRUD AND EXPRESSIONS
--- Database: postgres-lab
--- 12 SQL exercises
+-- Day 32: Core SQL CRUD and Expressions
 
--- ==========================================
--- 01. SELECT: Read products
--- ==========================================
+-- 01. SELECT
 
-SELECT id, name, price, stock_quantity
+SELECT
+    id,
+    name,
+    price,
+    stock_quantity
 FROM products
 ORDER BY id
 LIMIT 10;
 
 
--- ==========================================
--- 02. WHERE: Filter by price
--- ==========================================
+-- 02. WHERE
 
-SELECT id, name, price
+SELECT
+    id,
+    name,
+    price
 FROM products
 WHERE price >= 1500
 ORDER BY price ASC;
 
 
--- ==========================================
--- 03. AND: Multiple conditions
--- ==========================================
+-- 03. AND + BETWEEN
 
-SELECT id, name, price, stock_quantity
+SELECT
+    id,
+    name,
+    price,
+    stock_quantity
 FROM products
 WHERE price BETWEEN 1000 AND 3000
   AND stock_quantity >= 15
 ORDER BY price DESC;
 
 
--- ==========================================
--- 04. LIKE: Search products
--- ==========================================
+-- 04. ILIKE
 
-SELECT id, name, price
+SELECT
+    id,
+    name,
+    price
 FROM products
 WHERE name ILIKE '%product 1%'
 ORDER BY name;
 
 
--- ==========================================
--- 05. LIMIT and OFFSET: Pagination
--- ==========================================
+-- 05. LIMIT + OFFSET
 
-SELECT id, name, price
+SELECT
+    id,
+    name,
+    price
 FROM products
 ORDER BY id
 LIMIT 5 OFFSET 5;
 
 
--- ==========================================
--- 06. Aliases: Rename output columns
--- ==========================================
+-- 06. Aliases + Calculation
 
 SELECT
     name AS product_name,
@@ -67,18 +70,20 @@ ORDER BY id
 LIMIT 5;
 
 
--- ==========================================
--- 07. CASE: Derived order label
--- ==========================================
+-- 07. CASE Expression
 
 SELECT
     id,
     status,
     CASE
-        WHEN status = 'pending' THEN 'Waiting for approval'
-        WHEN status = 'confirmed' THEN 'Order confirmed'
-        WHEN status = 'completed' THEN 'Successfully delivered'
-        WHEN status = 'cancelled' THEN 'Order cancelled'
+        WHEN status = 'pending'
+            THEN 'Waiting for approval'
+        WHEN status = 'confirmed'
+            THEN 'Order confirmed'
+        WHEN status = 'completed'
+            THEN 'Successfully delivered'
+        WHEN status = 'cancelled'
+            THEN 'Order cancelled'
         ELSE 'Unknown status'
     END AS status_label
 FROM orders
@@ -86,9 +91,7 @@ ORDER BY id DESC
 LIMIT 10;
 
 
--- ==========================================
--- 08. COALESCE: Handle NULL
--- ==========================================
+-- 08. COALESCE
 
 SELECT
     id,
@@ -103,9 +106,7 @@ ORDER BY id
 LIMIT 10;
 
 
--- ==========================================
--- 09. INSERT with RETURNING
--- ==========================================
+-- 09. INSERT + RETURNING
 
 INSERT INTO products (
     vendor_id,
@@ -126,12 +127,14 @@ WHERE v.email = 'day32-vendor@example.com'
       WHERE p.vendor_id = v.id
         AND p.name = 'Day32 CRUD Test Product'
   )
-RETURNING id, name, price, stock_quantity;
+RETURNING
+    id,
+    name,
+    price,
+    stock_quantity;
 
 
--- ==========================================
--- 10. UPDATE with WHERE and RETURNING
--- ==========================================
+-- 10. UPDATE + WHERE + RETURNING
 
 UPDATE products
 SET
@@ -143,12 +146,14 @@ WHERE name = 'Day32 CRUD Test Product'
       FROM vendors
       WHERE email = 'day32-vendor@example.com'
   )
-RETURNING id, name, price, stock_quantity;
+RETURNING
+    id,
+    name,
+    price,
+    stock_quantity;
 
 
--- ==========================================
--- 11. DELETE with WHERE and RETURNING
--- ==========================================
+-- 11. DELETE + WHERE + RETURNING
 
 DELETE FROM products
 WHERE name = 'Day32 CRUD Test Product'
@@ -157,12 +162,12 @@ WHERE name = 'Day32 CRUD Test Product'
       FROM vendors
       WHERE email = 'day32-vendor@example.com'
   )
-RETURNING id, name;
+RETURNING
+    id,
+    name;
 
 
--- ==========================================
--- 12. Aggregate summary
--- ==========================================
+-- 12. Aggregate Summary
 
 SELECT
     COUNT(*) AS total_products,
