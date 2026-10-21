@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Day 45 responsive CSS Grid admin dashboard"
+    />
+    <title>Day 45 | Grid Admin</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="shell">
+      <aside class="sidebar" aria-label="Workspace navigation">
+        <a class="brand" href="#overview">◈ GridAdmin</a>
+        <nav class="nav" aria-label="Main navigation">
+          <a href="#overview" aria-current="page">Overview</a>
+          <a href="#projects">Projects</a>
+          <a href="#new-project">New project</a>
+        </nav>
+        <p class="sidebar-note">Day 45 · CSS Grid</p>
+      </aside>
+      <div class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Workspace / Overview</p>
+            <h1>Admin dashboard</h1>
+          </div>
+          <button
+            class="btn btn-secondary"
+            id="theme-button"
+            type="button"
+            aria-pressed="false"
+          >
+            Dark mode
+          </button>
+        </header>
+        <main id="main">
+          <section id="overview" aria-labelledby="overview-title">
+            <div class="section-head">
+              <h2 id="overview-title">Overview</h2>
+              <p>Responsive cards powered by CSS Grid.</p>
+            </div>
+            <div class="stats-grid">
+              <article class="card metric">
+                <span>Total projects</span><strong id="total">0</strong
+                ><small>Across your workspace</small>
+              </article>
+              <article class="card metric">
+                <span>Active</span><strong id="active">0</strong
+                ><small>Currently in progress</small>
+              </article>
+              <article class="card metric">
+                <span>Completed</span><strong id="completed">0</strong
+                ><small>Finished projects</small>
+              </article>
+              <article class="card metric">
+                <span>Completion</span><strong id="percent">0%</strong
+                ><small>Of all projects</small>
+              </article>
+            </div>
+          </section>
+          <div class="admin-grid">
+            <section
+              class="card projects-panel"
+              id="projects"
+              aria-labelledby="projects-title"
+            >
+              <div class="section-head">
+                <h2 id="projects-title">Projects</h2>
+                <span class="pill" id="project-count">0 projects</span>
+              </div>
+              <div class="project-grid" id="project-grid"></div>
+              <p class="empty" id="empty">
+                No projects yet. Create one using the form.
+              </p>
+            </section>
+            <aside
+              class="card form-panel"
+              id="new-project"
+              aria-labelledby="form-title"
+            >
+              <h2 id="form-title">Create project</h2>
+              <p class="muted">Reusable input, select and button primitives.</p>
+              <form id="project-form">
+                <div class="field">
+                  <label for="name">Project name</label
+                  ><input
+                    id="name"
+                    name="name"
+                    required
+                    minlength="3"
+                    maxlength="70"
+                    placeholder="e.g. Analytics dashboard"
+                  />
+                </div>
+                <div class="field">
+                  <label for="owner">Owner</label
+                  ><input
+                    id="owner"
+                    name="owner"
+                    required
+                    maxlength="50"
+                    placeholder="e.g. Engineering"
+                  />
+                </div>
+                <div class="field">
+                  <label for="status">Status</label
+                  ><select id="status" name="status">
+                    <option value="active">Active</option>
+                    <option value="completed">Completed</option>
+                  </select>
+                </div>
+                <button class="btn btn-primary" type="submit">
+                  Add project
+                </button>
+              </form>
+              <p class="hint">
+                Try resizing the browser: 375, 768, 1024 and 1440 px.
+              </p>
+            </aside>
+          </div>
+        </main>
+        <footer>Day 45 · Design tokens + CSS Grid · No UI framework</footer>
+      </div>
+    </div>
+    <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+  </body>
+</html>
