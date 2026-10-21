@@ -1,0 +1,2 @@
+import Link from 'next/link';
+export default function Home(){return <section className="hero"><p className="eyebrow">DAY 53 · SECURITY LAB</p><h1>Authentication & Sessions</h1><p>Learn server-verified sessions, protected routes, and role-based authorization.</p><div className="actions"><Link className="button" href="/login">Open login</Link><Link className="button secondary" href="/dashboard">Protected dashboard</Link></div></section>;}
