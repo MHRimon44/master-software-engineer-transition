@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "npm --prefix common/typescript run typecheck",
+    "build": "npm --prefix common/typescript run build && npm --prefix common/nest run build",
+    "dev": "npm --prefix common/typescript run dev",
+    "start:api": "npm --prefix common/nest run start:dev",
+    "test": "npm --prefix common/nest test -- --runInBand --watchman=false"
+  }
+}

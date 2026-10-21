@@ -1,4 +1,9 @@
-
 .DS_Store
 **/.DS_Store
-03-postgresql-lab/backups/
+node_modules/
+/node_modules
+**/node_modules/
+**/dist/
+**/coverage/
+common/nest/.env
+days/day-042/postgresql/backups/

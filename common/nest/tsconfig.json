@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2023",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "../../days",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "noFallthroughCasesInSwitch": false,
+    "rootDir": "../../days",
+    "tsBuildInfoFile": "./dist/tsconfig.build.tsbuildinfo"
+  },
+  "include": [
+    "../../days/day-018/**/*.ts",
+    "../../days/day-019/**/*.ts",
+    "../../days/day-020/**/*.ts",
+    "../../days/day-021/**/*.ts",
+    "../../days/day-022/**/*.ts",
+    "../../days/day-023/**/*.ts",
+    "../../days/day-024/**/*.ts",
+    "../../days/day-025/**/*.ts",
+    "../../days/day-026/**/*.ts",
+    "../../days/day-027/**/*.ts",
+    "../../days/day-028/**/*.ts",
+    "../../days/day-029/**/*.ts",
+    "../../days/day-030/**/*.ts"
+  ],
+  "exclude": [
+    "../../days/**/dsa/**"
+  ]
+}
