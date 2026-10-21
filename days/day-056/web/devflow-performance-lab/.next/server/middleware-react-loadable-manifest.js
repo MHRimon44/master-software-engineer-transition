@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST="{}"
+self.__REACT_LOADABLE_MANIFEST="{\"components/ChartLoader.tsx -> ./HeavyChart\":{\"id\":\"components/ChartLoader.tsx -> ./HeavyChart\",\"files\":[\"static/chunks/_app-pages-browser_components_HeavyChart_tsx.js\"]}}"
