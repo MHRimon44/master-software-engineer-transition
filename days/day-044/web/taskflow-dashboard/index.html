@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta
+      name="description"
+      content="TaskFlow - Responsive task management dashboard"
+    />
+
+    <title>TaskFlow | Dashboard</title>
+
+    <link rel="stylesheet" href="./styles.css" />
+
+    <script src="./app.js" defer></script>
+  </head>
+
+  <body>
+    <a href="#main-content" class="skip-link"> Skip to main content </a>
+
+    <div class="app-layout">
+      <!-- Sidebar -->
+      <aside class="sidebar" aria-label="Application sidebar">
+        <div class="brand">
+          <span class="brand-icon" aria-hidden="true">◆</span>
+          <span>TaskFlow</span>
+        </div>
+
+        <nav class="side-nav" aria-label="Main navigation">
+          <a href="#dashboard" class="nav-link active" aria-current="page">
+            Dashboard
+          </a>
+
+          <a href="#tasks" class="nav-link"> My Tasks </a>
+
+          <a href="#activity" class="nav-link"> Activity </a>
+        </nav>
+
+        <div class="sidebar-footer">
+          <p>Day 44 — CSS & Flexbox</p>
+        </div>
+      </aside>
+
+      <!-- Main area -->
+      <div class="main-shell">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Workspace</p>
+            <h1>TaskFlow Dashboard</h1>
+          </div>
+
+          <button
+            id="theme-toggle"
+            class="theme-button"
+            type="button"
+            aria-label="Switch to dark mode"
+            aria-pressed="false"
+          >
+            Dark Mode
+          </button>
+        </header>
+
+        <main id="main-content">
+          <!-- Dashboard -->
+          <section
+            id="dashboard"
+            class="dashboard-section"
+            aria-labelledby="overview-title"
+          >
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Overview</p>
+                <h2 id="overview-title">Your productivity</h2>
+              </div>
+
+              <p class="section-description">
+                Track your tasks and stay organized.
+              </p>
+            </div>
+
+            <div class="stats-row">
+              <article class="stat-card">
+                <p class="stat-label">Total Tasks</p>
+                <strong id="total-count" class="stat-value">0</strong>
+                <span class="stat-note">All tasks</span>
+              </article>
+
+              <article class="stat-card">
+                <p class="stat-label">Completed</p>
+                <strong id="completed-count" class="stat-value">0</strong>
+                <span class="stat-note">Finished tasks</span>
+              </article>
+
+              <article class="stat-card">
+                <p class="stat-label">Pending</p>
+                <strong id="pending-count" class="stat-value">0</strong>
+                <span class="stat-note">Remaining tasks</span>
+              </article>
+            </div>
+          </section>
+
+          <!-- Dashboard content -->
+          <div class="content-row">
+            <!-- Task manager -->
+            <section
+              id="tasks"
+              class="panel task-panel"
+              aria-labelledby="tasks-title"
+            >
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">Task management</p>
+                  <h2 id="tasks-title">My Tasks</h2>
+                </div>
+              </div>
+
+              <form id="task-form" class="task-form">
+                <div class="field">
+                  <label for="task-title">Task title</label>
+
+                  <input
+                    id="task-title"
+                    name="title"
+                    type="text"
+                    placeholder="Enter a new task"
+                    minlength="3"
+                    maxlength="100"
+                    required
+                  />
+                </div>
+
+                <div class="form-actions">
+                  <div class="field priority-field">
+                    <label for="task-priority">Priority</label>
+
+                    <select id="task-priority" name="priority">
+                      <option value="low">Low</option>
+                      <option value="medium" selected>Medium</option>
+                      <option value="high">High</option>
+                    </select>
+                  </div>
+
+                  <button class="primary-button" type="submit">Add Task</button>
+                </div>
+              </form>
+
+              <div class="task-list-heading">
+                <h3>Task List</h3>
+                <span id="task-count-label">0 tasks</span>
+              </div>
+
+              <ul id="task-list" class="task-list"></ul>
+
+              <p id="empty-state" class="empty-state">
+                No tasks yet. Add your first task above.
+              </p>
+            </section>
+
+            <!-- Activity panel -->
+            <section
+              id="activity"
+              class="panel activity-panel"
+              aria-labelledby="activity-title"
+            >
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">Workspace insights</p>
+                  <h2 id="activity-title">Activity</h2>
+                </div>
+              </div>
+
+              <div class="activity-content">
+                <p class="activity-description">Your completion progress</p>
+
+                <div
+                  class="progress-track"
+                  role="progressbar"
+                  aria-label="Task completion progress"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="0"
+                  id="progress-track"
+                >
+                  <div id="progress-fill" class="progress-fill"></div>
+                </div>
+
+                <strong id="progress-label">0% completed</strong>
+
+                <div class="activity-divider"></div>
+
+                <h3>Today's focus</h3>
+
+                <p class="activity-description">
+                  Practice CSS Cascade, Box Model and Flexbox.
+                </p>
+
+                <div class="learning-tags">
+                  <span>CSS</span>
+                  <span>Flexbox</span>
+                  <span>Responsive</span>
+                </div>
+              </div>
+            </section>
+          </div>
+        </main>
+
+        <footer class="footer">
+          <p>TaskFlow — Day 44 Learning Project</p>
+        </footer>
+      </div>
+    </div>
+
+    <p
+      id="announcement"
+      class="sr-only"
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+    ></p>
+  </body>
+</html>
