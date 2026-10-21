@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import { can, isRole } from '../lib/permissions';
+assert.equal(can('member', 'dashboard:read'), true);
+assert.equal(can('member', 'projects:write'), false);
+assert.equal(can('member', 'admin:read'), false);
+assert.equal(can('manager', 'projects:write'), true);
+assert.equal(can('manager', 'admin:read'), false);
+assert.equal(can('admin', 'admin:read'), true);
+assert.equal(isRole('superadmin'), false);
+assert.equal(isRole('admin'), true);
+console.log('PASS: 8 RBAC assertions');

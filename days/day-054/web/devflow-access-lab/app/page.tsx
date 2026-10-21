@@ -1,0 +1,2 @@
+import Link from 'next/link';
+export default function Home() { return <section className="card"><p className="eyebrow">Security learning lab</p><h1>Authentication is not authorization.</h1><p className="muted">Test protected routes, signed sessions and role-based permissions in a safe demo.</p><div className="links"><Link className="button" href="/login">Sign in</Link><Link className="button" href="/dashboard">Open dashboard</Link></div></section>; }
