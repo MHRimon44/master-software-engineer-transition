@@ -1,2 +1,27 @@
+import type { Metadata } from 'next';
+export const metadata: Metadata = {
+  title: 'Code splitting',
+  description: 'Learn dynamic imports and interaction performance.',
+  alternates: { canonical: '/interactive' },
+};
 import ChartLoader from '@/components/ChartLoader';
-export default function Interactive(){return <><span className='pill'>JavaScript Lab</span><h1>Defer code until it is useful</h1><p className='muted'>The chart module is split into a separate client-side chunk. Open DevTools → Network → JS, then click Load interactive chart.</p><ChartLoader/><div className='card box'><strong>Why it matters</strong><p>Less initial JavaScript can improve responsiveness, but lazy loading has a trade-off: a small delay when the user first opens the feature.</p></div></>}
+export default function Interactive() {
+  return (
+    <>
+      <span className="pill">JavaScript Lab</span>
+      <h1>Defer code until it is useful</h1>
+      <p className="muted">
+        The chart module is split into a separate client-side chunk. Open DevTools → Network → JS,
+        then click Load interactive chart.
+      </p>
+      <ChartLoader />
+      <div className="card box">
+        <strong>Why it matters</strong>
+        <p>
+          Less initial JavaScript can improve responsiveness, but lazy loading has a trade-off: a
+          small delay when the user first opens the feature.
+        </p>
+      </div>
+    </>
+  );
+}

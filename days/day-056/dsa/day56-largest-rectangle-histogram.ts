@@ -12,5 +12,15 @@ function largestRectangleArea(heights: number[]): number {
   }
   return best;
 }
-const cases: [number[],number][] = [ [[2,1,5,6,2,3],10], [[2,4],4], [[1],1], [[],0], [[2,2,2],6] ];
-for(const [input,expected] of cases){const actual=largestRectangleArea(input);if(actual!==expected)throw new Error(`Expected ${expected}, got ${actual}`);console.log('PASS',JSON.stringify(input),'→',actual)}
+const cases: [number[], number][] = [
+  [[2, 1, 5, 6, 2, 3], 10],
+  [[2, 4], 4],
+  [[1], 1],
+  [[], 0],
+  [[2, 2, 2], 6],
+];
+for (const [input, expected] of cases) {
+  const actual = largestRectangleArea(input);
+  if (actual !== expected) throw new Error(`Expected ${expected}, got ${actual}`);
+  console.log('PASS', JSON.stringify(input), '→', actual);
+}
