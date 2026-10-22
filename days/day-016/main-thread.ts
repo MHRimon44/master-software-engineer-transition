@@ -8,12 +8,12 @@ function heavyCalculation() {
   return total;
 }
 
-console.time("main-thread-work");
+console.time('main-thread-work');
 
 setInterval(() => {
-  console.log("tick");
+  console.log('tick');
 }, 1000);
 
 heavyCalculation();
 
-console.timeEnd("main-thread-work");
+console.timeEnd('main-thread-work');

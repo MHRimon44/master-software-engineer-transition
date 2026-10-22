@@ -5,9 +5,7 @@ import { MockAuthGuard } from './mock-auth.guard';
 describe('MockAuthGuard', () => {
   const guard = new MockAuthGuard();
 
-  function createContext(
-    headers: Record<string, string | undefined>,
-  ): ExecutionContext {
+  function createContext(headers: Record<string, string | undefined>): ExecutionContext {
     const request = {
       headers,
     };

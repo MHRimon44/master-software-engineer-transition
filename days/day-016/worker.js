@@ -1,4 +1,4 @@
-import { parentPort } from "node:worker_threads";
+import { parentPort } from 'node:worker_threads';
 
 let total = 0;
 

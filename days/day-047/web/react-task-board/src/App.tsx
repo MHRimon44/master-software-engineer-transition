@@ -1,26 +1,26 @@
-import { useRef, useState } from "react";
-import type { FormEvent } from "react";
-import { ThemeProvider, useTheme } from "./ThemeContext";
-import { taskReducer } from "./taskReducer";
-import type { Task } from "./taskReducer";
-import { usePersistentReducer } from "./usePersistentReducer";
+import { useRef, useState } from 'react';
+import type { FormEvent } from 'react';
+import { ThemeProvider, useTheme } from './ThemeContext';
+import { taskReducer } from './taskReducer';
+import type { Task } from './taskReducer';
+import { usePersistentReducer } from './usePersistentReducer';
 function ThemeButton() {
   const { theme, toggleTheme } = useTheme();
   return (
     <button type="button" className="secondary" onClick={toggleTheme}>
-      Switch to {theme === "dark" ? "light" : "dark"} mode
+      Switch to {theme === 'dark' ? 'light' : 'dark'} mode
     </button>
   );
 }
 function TaskForm({ onAdd }: { onAdd: (title: string) => void }) {
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const value = title.trim();
     if (value.length < 3) return;
     onAdd(value);
-    setTitle("");
+    setTitle('');
     inputRef.current?.focus();
   }
   return (
@@ -57,12 +57,8 @@ function TaskList({
       {tasks.map((task) => (
         <li key={task.id} className="task-row">
           <label className="task-label">
-            <input
-              type="checkbox"
-              checked={task.done}
-              onChange={() => onToggle(task.id)}
-            />
-            <span className={task.done ? "completed" : ""}>{task.title}</span>
+            <input type="checkbox" checked={task.done} onChange={() => onToggle(task.id)} />
+            <span className={task.done ? 'completed' : ''}>{task.title}</span>
           </label>
           <button
             type="button"
@@ -78,16 +74,12 @@ function TaskList({
   );
 }
 function Board() {
-  const [tasks, dispatch] = usePersistentReducer(
-    "day47-tasks",
-    taskReducer,
-    [] as Task[],
-  );
-  const [filter, setFilter] = useState<"all" | "active" | "done">("all");
+  const [tasks, dispatch] = usePersistentReducer('day47-tasks', taskReducer, [] as Task[]);
+  const [filter, setFilter] = useState<'all' | 'active' | 'done'>('all');
   // Derived values: calculate during render, NOT in useEffect.
   const completed = tasks.filter((task) => task.done).length;
   const visible = tasks.filter(
-    (task) => filter === "all" || (filter === "done" ? task.done : !task.done),
+    (task) => filter === 'all' || (filter === 'done' ? task.done : !task.done),
   );
   return (
     <main className="container">
@@ -118,18 +110,18 @@ function Board() {
         <TaskForm
           onAdd={(title) =>
             dispatch({
-              type: "add",
+              type: 'add',
               task: { id: crypto.randomUUID(), title, done: false },
             })
           }
         />
         <div className="toolbar">
           <div className="filters" aria-label="Filter tasks">
-            {(["all", "active", "done"] as const).map((value) => (
+            {(['all', 'active', 'done'] as const).map((value) => (
               <button
                 key={value}
                 type="button"
-                className={filter === value ? "selected" : "secondary"}
+                className={filter === value ? 'selected' : 'secondary'}
                 aria-pressed={filter === value}
                 onClick={() => setFilter(value)}
               >
@@ -140,7 +132,7 @@ function Board() {
           <button
             type="button"
             className="secondary"
-            onClick={() => dispatch({ type: "clearCompleted" })}
+            onClick={() => dispatch({ type: 'clearCompleted' })}
             disabled={completed === 0}
           >
             Clear completed
@@ -148,13 +140,12 @@ function Board() {
         </div>
         <TaskList
           tasks={visible}
-          onToggle={(id) => dispatch({ type: "toggle", id })}
-          onRemove={(id) => dispatch({ type: "remove", id })}
+          onToggle={(id) => dispatch({ type: 'toggle', id })}
+          onRemove={(id) => dispatch({ type: 'remove', id })}
         />
       </section>
       <footer>
-        State: reducer · Shared theme: context · Persistence: custom hook +
-        effect · Focus: ref
+        State: reducer · Shared theme: context · Persistence: custom hook + effect · Focus: ref
       </footer>
     </main>
   );

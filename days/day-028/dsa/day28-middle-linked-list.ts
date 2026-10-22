@@ -26,30 +26,24 @@ function printList(head: ListNode | null): void {
     current = current.next;
   }
 
-  console.log(values.join(" -> "));
+  console.log(values.join(' -> '));
 }
 
-const oddList = new ListNode(
-  1,
-  new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))),
-);
+const oddList = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
 
 const evenList = new ListNode(
   1,
-  new ListNode(
-    2,
-    new ListNode(3, new ListNode(4, new ListNode(5, new ListNode(6)))),
-  ),
+  new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5, new ListNode(6))))),
 );
 
-console.log("Odd list:");
+console.log('Odd list:');
 printList(oddList);
 
-console.log("Middle:", middleNode(oddList)?.val);
+console.log('Middle:', middleNode(oddList)?.val);
 
-console.log("");
+console.log('');
 
-console.log("Even list:");
+console.log('Even list:');
 printList(evenList);
 
-console.log("Middle:", middleNode(evenList)?.val);
+console.log('Middle:', middleNode(evenList)?.val);

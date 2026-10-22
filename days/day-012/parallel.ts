@@ -7,7 +7,7 @@ function fetchProduct(id: number): Promise<string> {
 }
 
 async function main() {
-  console.time("Parallel");
+  console.time('Parallel');
 
   const [product1, product2, product3] = await Promise.all([
     fetchProduct(1),
@@ -19,7 +19,7 @@ async function main() {
   console.log(product2);
   console.log(product3);
 
-  console.timeEnd("Parallel");
+  console.timeEnd('Parallel');
 }
 
 main();

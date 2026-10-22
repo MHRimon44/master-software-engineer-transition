@@ -8,5 +8,8 @@
     "start:api": "npm --prefix common/nest run start:dev",
     "test": "npm --prefix common/nest test -- --runInBand --watchman=false",
     "dsa": "node ./scripts/run-dsa.mjs"
+  },
+  "devDependencies": {
+    "prettier": "^3.9.10"
   }
 }

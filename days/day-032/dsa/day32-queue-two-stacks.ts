@@ -48,9 +48,9 @@ queue.push(10);
 queue.push(20);
 queue.push(30);
 
-console.log("Peek:", queue.peek());
-console.log("Pop:", queue.pop());
-console.log("Peek:", queue.peek());
-console.log("Pop:", queue.pop());
-console.log("Pop:", queue.pop());
-console.log("Empty:", queue.empty());
+console.log('Peek:', queue.peek());
+console.log('Pop:', queue.pop());
+console.log('Peek:', queue.peek());
+console.log('Pop:', queue.pop());
+console.log('Pop:', queue.pop());
+console.log('Empty:', queue.empty());

@@ -38,7 +38,5 @@
     "../../days/day-029/**/*.ts",
     "../../days/day-030/**/*.ts"
   ],
-  "exclude": [
-    "../../days/**/dsa/**"
-  ]
+  "exclude": ["../../days/**/dsa/**"]
 }

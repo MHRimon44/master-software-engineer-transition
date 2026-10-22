@@ -8,7 +8,7 @@ export interface Product {
 
 const product: Product = {
   id: 101,
-  name: "Cotton Shirt",
+  name: 'Cotton Shirt',
   price: 1200,
   stock: 10,
 };

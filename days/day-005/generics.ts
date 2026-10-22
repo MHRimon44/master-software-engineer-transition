@@ -1,15 +1,15 @@
-import { ApiResponse, PaginatedResult } from "../day-007/api-response.js";
+import { ApiResponse, PaginatedResult } from '../day-007/api-response.js';
 
 const ProductsResponse: ApiResponse<Product[]> = {
   status: true,
-  message: "Products fetched successfully",
-  data: [{ id: 1, name: "Keyboard", price: 100 }],
+  message: 'Products fetched successfully',
+  data: [{ id: 1, name: 'Keyboard', price: 100 }],
 };
 
 const paginatedProducts: PaginatedResult<Product> = {
   pageNo: 1,
   totalPages: 10,
-  data: [{ id: 1, name: "Keyboard", price: 100 }],
+  data: [{ id: 1, name: 'Keyboard', price: 100 }],
 };
 
 function identity<T>(value: T): T {
@@ -17,12 +17,9 @@ function identity<T>(value: T): T {
 }
 
 const productId = identity(101);
-const productName = identity("Keyboard");
+const productName = identity('Keyboard');
 const productPrice = identity(100);
-function getById<T extends { id: number }>(
-  items: T[],
-  id: number,
-): T | undefined {
+function getById<T extends { id: number }>(items: T[], id: number): T | undefined {
   return items.find((item) => item.id === id);
 }
 
@@ -32,15 +29,9 @@ function getProperty<T, K extends keyof T>(obj: T, key: K) {
 const firstProduct = ProductsResponse.data[0];
 
 if (firstProduct) {
-  const productNameFromProperty = getProperty<Product, "name">(
-    firstProduct,
-    "name",
-  );
+  const productNameFromProperty = getProperty<Product, 'name'>(firstProduct, 'name');
 
-  const productPriceFromProperty = getProperty<Product, "price">(
-    firstProduct,
-    "price",
-  );
+  const productPriceFromProperty = getProperty<Product, 'price'>(firstProduct, 'price');
 }
 
 class Repository<T extends { id: number }> {
@@ -63,13 +54,13 @@ const productRepository = new Repository<Product>();
 
 productRepository.add({
   id: 1,
-  name: "Keyboard",
+  name: 'Keyboard',
   price: 100,
 });
 
 productRepository.add({
   id: 2,
-  name: "Mouse",
+  name: 'Mouse',
   price: 50,
 });
 
@@ -88,7 +79,7 @@ type Product = {
   stock?: number;
 };
 
-type ProductInput = RequireFields<Product, "name" | "price">;
+type ProductInput = RequireFields<Product, 'name' | 'price'>;
 
 function bubbleSort(nums: number[]): number[] {
   const result = [...nums];
@@ -116,13 +107,13 @@ async function request<T>(url: string): Promise<ApiResponse<T>> {
   // simulate API response
   return {
     status: true,
-    message: "Success",
+    message: 'Success',
     data: [] as T,
   };
 }
 
 async function main() {
-  const response = await request<Product[]>("/products");
+  const response = await request<Product[]>('/products');
 
   console.log(response.status);
   console.log(response.message);
@@ -136,14 +127,14 @@ function getErrorMessage(error: unknown): string {
     return error.message;
   }
 
-  if (typeof error === "string") {
+  if (typeof error === 'string') {
     return error;
   }
 
-  return "Unknown error";
+  return 'Unknown error';
 }
-console.log(getErrorMessage(new Error("Network failed")));
-console.log(getErrorMessage("Timeout"));
+console.log(getErrorMessage(new Error('Network failed')));
+console.log(getErrorMessage('Timeout'));
 console.log(getErrorMessage({ code: 500 }));
 
 // class ApiClient {
@@ -191,21 +182,18 @@ class ApiClient {
 
     return {
       status: true,
-      message: "Success",
+      message: 'Success',
       data: [] as T,
     };
   }
 
-  async post<TRequest, TResponse>(
-    url: string,
-    body: TRequest,
-  ): Promise<ApiResponse<TResponse>> {
+  async post<TRequest, TResponse>(url: string, body: TRequest): Promise<ApiResponse<TResponse>> {
     console.log(`POST ${url}`);
-    console.log("Body:", body);
+    console.log('Body:', body);
 
     return {
       status: true,
-      message: "Created successfully",
+      message: 'Created successfully',
       data: {} as TResponse,
     };
   }
@@ -214,9 +202,9 @@ class ApiClient {
 async function createProduct() {
   const client = new ApiClient();
 
-  const response = await client.post<ProductInput, Product>("/products", {
+  const response = await client.post<ProductInput, Product>('/products', {
     id: 101,
-    name: "Cotton Shirt",
+    name: 'Cotton Shirt',
     price: 1200,
   });
 

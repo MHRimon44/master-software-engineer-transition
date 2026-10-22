@@ -45,8 +45,7 @@ export class TasksController {
     name: 'Idempotency-Key',
     required: false,
     example: 'create-task-abc-123',
-    description:
-      'Optional idempotency key with a maximum length of 128 characters',
+    description: 'Optional idempotency key with a maximum length of 128 characters',
   })
   create(
     @Body() dto: CreateTaskDto,

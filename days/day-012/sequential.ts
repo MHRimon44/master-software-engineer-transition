@@ -7,7 +7,7 @@ function fetchProduct(id: number): Promise<string> {
 }
 
 async function main() {
-  console.time("Sequential");
+  console.time('Sequential');
 
   const product1 = await fetchProduct(1);
   const product2 = await fetchProduct(2);
@@ -17,7 +17,7 @@ async function main() {
   console.log(product2);
   console.log(product3);
 
-  console.timeEnd("Sequential");
+  console.timeEnd('Sequential');
 }
 
 main();

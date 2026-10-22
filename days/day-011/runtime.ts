@@ -1,4 +1,4 @@
-console.log("Node version:", process.version);
-console.log("Platform:", process.platform);
-console.log("Architecture:", process.arch);
-console.log("Memory:", process.memoryUsage());
+console.log('Node version:', process.version);
+console.log('Platform:', process.platform);
+console.log('Architecture:', process.arch);
+console.log('Memory:', process.memoryUsage());

@@ -148,10 +148,7 @@ describe('TasksService', () => {
       }),
     ).resolves.toEqual(createdTask);
 
-    expect(projectTasksRepositoryMock.create).toHaveBeenCalledWith(
-      1,
-      'project-1-task',
-    );
+    expect(projectTasksRepositoryMock.create).toHaveBeenCalledWith(1, 'project-1-task');
   });
 
   it('should reject updating a task through a different project', async () => {

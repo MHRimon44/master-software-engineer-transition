@@ -25,8 +25,7 @@ export class ProjectsService {
   ) {}
 
   async findAll(): Promise<ProjectEntity[]> {
-    const cachedProjects =
-      await this.redisCacheService.get<ProjectEntity[]>(PROJECTS_CACHE_KEY);
+    const cachedProjects = await this.redisCacheService.get<ProjectEntity[]>(PROJECTS_CACHE_KEY);
 
     if (cachedProjects !== null) {
       return cachedProjects;
@@ -34,24 +33,14 @@ export class ProjectsService {
 
     const projects = await this.projectsRepository.findAll();
 
-    await this.redisCacheService.set(
-      PROJECTS_CACHE_KEY,
-      projects,
-      PROJECTS_CACHE_TTL_SECONDS,
-    );
+    await this.redisCacheService.set(PROJECTS_CACHE_KEY, projects, PROJECTS_CACHE_TTL_SECONDS);
 
     return projects;
   }
 
-  async create(
-    input: CreateProjectDto,
-    ownerUserId: string,
-  ): Promise<ProjectEntity> {
+  async create(input: CreateProjectDto, ownerUserId: string): Promise<ProjectEntity> {
     const project = await this.dataSource.transaction(async (manager) => {
-      const createdProject = await this.projectsRepository.createWithManager(
-        manager,
-        input.name,
-      );
+      const createdProject = await this.projectsRepository.createWithManager(manager, input.name);
 
       const memberships = manager.getRepository(ProjectMembershipEntity);
 
@@ -68,13 +57,8 @@ export class ProjectsService {
 
     await this.redisCacheService.delete(PROJECTS_CACHE_KEY);
 
-    void this.backgroundJobService.runWithRetry(
-      'project-created-notification',
-      () =>
-        this.notificationService.sendProjectCreatedNotification(
-          project.id,
-          project.name,
-        ),
+    void this.backgroundJobService.runWithRetry('project-created-notification', () =>
+      this.notificationService.sendProjectCreatedNotification(project.id, project.name),
     );
 
     return project;

@@ -21,18 +21,10 @@
     <main id="main" class="layout">
       <section class="card" aria-labelledby="url-heading">
         <h2 id="url-heading">1. URL & History</h2>
-        <p>
-          Update the URL without reloading the page. Refresh to confirm the
-          query persists.
-        </p>
+        <p>Update the URL without reloading the page. Refresh to confirm the query persists.</p>
         <form id="url-form" class="stack">
           <label for="search">Search query</label
-          ><input
-            id="search"
-            name="search"
-            placeholder="e.g. dashboard"
-            maxlength="60"
-          />
+          ><input id="search" name="search" placeholder="e.g. dashboard" maxlength="60" />
           <label for="view">View</label
           ><select id="view">
             <option value="all">All</option>
@@ -41,21 +33,15 @@
           </select>
           <div class="actions">
             <button type="submit">Push URL state</button
-            ><button type="button" id="replace-url" class="secondary">
-              Replace URL state</button
-            ><button type="button" id="clear-url" class="secondary">
-              Clear
-            </button>
+            ><button type="button" id="replace-url" class="secondary">Replace URL state</button
+            ><button type="button" id="clear-url" class="secondary">Clear</button>
           </div>
         </form>
         <output id="url-output" class="output"></output>
       </section>
       <section class="card" aria-labelledby="storage-heading">
         <h2 id="storage-heading">2. Browser Storage</h2>
-        <p>
-          Save a harmless mock preference. Never put passwords or real tokens
-          here.
-        </p>
+        <p>Save a harmless mock preference. Never put passwords or real tokens here.</p>
         <div class="stack">
           <label for="preference">Preference value</label
           ><input id="preference" placeholder="e.g. compact" maxlength="60" />
@@ -68,80 +54,52 @@
           <div class="actions">
             <button id="save-pref" type="button">Save</button
             ><button id="read-pref" type="button" class="secondary">Read</button
-            ><button id="remove-pref" type="button" class="secondary">
-              Remove
-            </button>
+            ><button id="remove-pref" type="button" class="secondary">Remove</button>
           </div>
         </div>
-        <output id="storage-output" class="output" aria-live="polite"
-          >No action yet.</output
-        >
+        <output id="storage-output" class="output" aria-live="polite">No action yet.</output>
       </section>
       <section class="card" aria-labelledby="event-heading">
         <h2 id="event-heading">3. Event Propagation</h2>
-        <p>
-          Click the inner button and inspect capture → target → bubble ordering.
-        </p>
+        <p>Click the inner button and inspect capture → target → bubble ordering.</p>
         <label class="check"
-          ><input id="stop-propagation" type="checkbox" /> Stop bubbling at
-          target</label
+          ><input id="stop-propagation" type="checkbox" /> Stop bubbling at target</label
         >
         <div id="outer" class="event-outer">
           Outer container
           <div id="middle" class="event-middle">
-            Middle container<button id="inner" type="button">
-              Click inner target
-            </button>
+            Middle container<button id="inner" type="button">Click inner target</button>
           </div>
         </div>
         <div class="actions">
-          <button id="clear-events" type="button" class="secondary">
-            Clear log
-          </button>
+          <button id="clear-events" type="button" class="secondary">Clear log</button>
         </div>
         <ol id="event-log" class="event-log" aria-live="polite"></ol>
       </section>
       <section class="card" aria-labelledby="cors-heading">
         <h2 id="cors-heading">4. CORS Lab</h2>
         <p>
-          Start the included Python server on port 5505. This page runs on port
-          5504, so requests are cross-origin.
+          Start the included Python server on port 5505. This page runs on port 5504, so requests
+          are cross-origin.
         </p>
         <div class="actions">
-          <button id="cors-denied" type="button">
-            Fetch without CORS headers</button
-          ><button id="cors-allowed" type="button" class="secondary">
-            Fetch with CORS headers</button
-          ><button id="cors-preflight" type="button" class="secondary">
-            POST with preflight
-          </button>
+          <button id="cors-denied" type="button">Fetch without CORS headers</button
+          ><button id="cors-allowed" type="button" class="secondary">Fetch with CORS headers</button
+          ><button id="cors-preflight" type="button" class="secondary">POST with preflight</button>
         </div>
-        <output id="cors-output" class="output" aria-live="polite"
-          >Waiting for request.</output
-        >
+        <output id="cors-output" class="output" aria-live="polite">Waiting for request.</output>
       </section>
       <section class="card wide" aria-labelledby="security-heading">
         <h2 id="security-heading">5. Security checklist</h2>
         <ul>
-          <li>
-            Never store production credentials or bearer tokens in this demo.
-          </li>
-          <li>
-            JavaScript-readable storage is exposed to malicious scripts if XSS
-            occurs.
-          </li>
+          <li>Never store production credentials or bearer tokens in this demo.</li>
+          <li>JavaScript-readable storage is exposed to malicious scripts if XSS occurs.</li>
           <li>HttpOnly cookies cannot be read through document.cookie.</li>
+          <li>SameSite mitigates some CSRF cases; CSRF protections may still be required.</li>
+          <li>CORS is a browser read-access policy, not authentication or server authorization.</li>
           <li>
-            SameSite mitigates some CSRF cases; CSRF protections may still be
-            required.
-          </li>
-          <li>
-            CORS is a browser read-access policy, not authentication or server
-            authorization.
-          </li>
-          <li>
-            Cross-origin credentials require deliberate cookie attributes and
-            server CORS configuration.
+            Cross-origin credentials require deliberate cookie attributes and server CORS
+            configuration.
           </li>
         </ul>
       </section>

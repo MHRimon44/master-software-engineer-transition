@@ -1,14 +1,14 @@
-console.log("Application started");
+console.log('Application started');
 
 const interval = setInterval(() => {
-  console.log("working");
+  console.log('working');
 }, 1000);
 
-process.on("SIGINT", () => {
-  console.log("Received SIGINT");
+process.on('SIGINT', () => {
+  console.log('Received SIGINT');
 
   clearInterval(interval);
-  console.log("Resources closed");
+  console.log('Resources closed');
 
   process.exit(0);
 });

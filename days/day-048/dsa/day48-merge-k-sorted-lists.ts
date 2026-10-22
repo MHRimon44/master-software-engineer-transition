@@ -2,7 +2,9 @@ type ListNode = { val: number; next: ListNode | null };
 
 class MinHeap {
   private data: ListNode[] = [];
-  get size(): number { return this.data.length; }
+  get size(): number {
+    return this.data.length;
+  }
   push(node: ListNode): void {
     this.data.push(node);
     let i = this.data.length - 1;
@@ -20,7 +22,8 @@ class MinHeap {
       this.data[0] = last;
       let i = 0;
       while (true) {
-        const l = i * 2 + 1, r = l + 1;
+        const l = i * 2 + 1,
+          r = l + 1;
         let smallest = i;
         if (l < this.data.length && this.data[l]!.val < this.data[smallest]!.val) smallest = l;
         if (r < this.data.length && this.data[r]!.val < this.data[smallest]!.val) smallest = r;
@@ -60,13 +63,29 @@ function values(head: ListNode | null): number[] {
 }
 function test(name: string, lists: number[][], expected: number[]): void {
   const actual = values(mergeKLists(lists.map(makeList)));
-  if (JSON.stringify(actual) !== JSON.stringify(expected)) throw new Error(`${name}: ${JSON.stringify(actual)}`);
+  if (JSON.stringify(actual) !== JSON.stringify(expected))
+    throw new Error(`${name}: ${JSON.stringify(actual)}`);
   console.log(`PASS | ${name}`);
 }
 test('Empty input', [], []);
 test('Empty lists', [[], []], []);
 test('Single list', [[1, 2, 3]], [1, 2, 3]);
-test('Classic example', [[1, 4, 5], [1, 3, 4], [2, 6]], [1, 1, 2, 3, 4, 4, 5, 6]);
-test('Negative and duplicates', [[-5, 0], [-3, 0, 9]], [-5, -3, 0, 0, 9]);
+test(
+  'Classic example',
+  [
+    [1, 4, 5],
+    [1, 3, 4],
+    [2, 6],
+  ],
+  [1, 1, 2, 3, 4, 4, 5, 6],
+);
+test(
+  'Negative and duplicates',
+  [
+    [-5, 0],
+    [-3, 0, 9],
+  ],
+  [-5, -3, 0, 0, 9],
+);
 console.log('All Day 48 Merge K Sorted Lists tests passed!');
 export {};

@@ -1,3 +1,3 @@
 const value = 10;
 
-console.log("CommonJS-style test:", value);
+console.log('CommonJS-style test:', value);

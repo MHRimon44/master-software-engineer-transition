@@ -45,30 +45,24 @@ class MinHeap {
   }
 }
 function findKthLargest(nums: number[], k: number): number {
-  if (!Number.isInteger(k) || k < 1 || k > nums.length)
-    throw new RangeError("Invalid k");
+  if (!Number.isInteger(k) || k < 1 || k > nums.length) throw new RangeError('Invalid k');
   const heap = new MinHeap();
   for (const num of nums) {
     heap.push(num);
     if (heap.size > k) heap.pop();
   }
   const answer = heap.peek();
-  if (answer === undefined) throw new Error("Unexpected empty heap");
+  if (answer === undefined) throw new Error('Unexpected empty heap');
   return answer;
 }
 function assertEqual(name: string, actual: number, expected: number): void {
-  if (actual !== expected)
-    throw new Error(`FAIL | ${name}: expected ${expected}, got ${actual}`);
+  if (actual !== expected) throw new Error(`FAIL | ${name}: expected ${expected}, got ${actual}`);
   console.log(`PASS | ${name}`);
 }
-assertEqual("Example 1", findKthLargest([3, 2, 1, 5, 6, 4], 2), 5);
-assertEqual(
-  "Example 2 with duplicates",
-  findKthLargest([3, 2, 3, 1, 2, 4, 5, 5, 6], 4),
-  4,
-);
-assertEqual("Single element", findKthLargest([7], 1), 7);
-assertEqual("Negative numbers", findKthLargest([-3, -1, -2], 2), -2);
-assertEqual("K equals length", findKthLargest([9, 1, 4], 3), 1);
-console.log("All Day 46 heap tests passed!");
+assertEqual('Example 1', findKthLargest([3, 2, 1, 5, 6, 4], 2), 5);
+assertEqual('Example 2 with duplicates', findKthLargest([3, 2, 3, 1, 2, 4, 5, 5, 6], 4), 4);
+assertEqual('Single element', findKthLargest([7], 1), 7);
+assertEqual('Negative numbers', findKthLargest([-3, -1, -2], 2), -2);
+assertEqual('K equals length', findKthLargest([9, 1, 4], 3), 1);
+console.log('All Day 46 heap tests passed!');
 export {};

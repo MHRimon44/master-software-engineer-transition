@@ -97,13 +97,9 @@ describe('Team Task API (e2e)', () => {
       email,
     });
 
-    expect(loginResponse.body.data.tokens.accessToken).toEqual(
-      expect.any(String),
-    );
+    expect(loginResponse.body.data.tokens.accessToken).toEqual(expect.any(String));
 
-    expect(loginResponse.body.data.tokens.refreshToken).toEqual(
-      expect.any(String),
-    );
+    expect(loginResponse.body.data.tokens.refreshToken).toEqual(expect.any(String));
   });
 
   it('should reject access to protected project tasks without an access token', async () => {

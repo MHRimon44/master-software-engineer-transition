@@ -9,9 +9,7 @@ type ConfigShape = {
 
 @Injectable()
 export class AppConfigService {
-  constructor(
-    private readonly configService: ConfigService<ConfigShape, true>,
-  ) {}
+  constructor(private readonly configService: ConfigService<ConfigShape, true>) {}
 
   get appName(): string {
     return this.configService.get('app.appName', {

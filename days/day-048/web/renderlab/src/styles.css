@@ -1,1 +1,154 @@
-*{box-sizing:border-box}body{margin:0;background:#f1f5f9;color:#172033;font-family:system-ui,-apple-system,Arial,sans-serif}button,input{font:inherit}button{border:0;border-radius:10px;background:#253b85;color:#fff;padding:11px 16px;cursor:pointer}button:focus-visible,input:focus-visible{outline:3px solid #f59e0b;outline-offset:2px}.shell{width:min(1100px,calc(100% - 32px));margin:36px auto}header{display:flex;justify-content:space-between;gap:20px;align-items:start}h1{font-size:clamp(2rem,5vw,3rem);margin:0}h2{margin-top:0}header p{color:#64748b}.eyebrow{text-transform:uppercase;font-weight:700;letter-spacing:.1em;font-size:.75rem}.tag{background:#dbeafe;color:#1e40af;padding:8px 14px;border-radius:99px;white-space:nowrap}.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:14px;margin:22px 0}.panel{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:22px;box-shadow:0 6px 18px #14213d08}.metrics .panel{display:flex;flex-direction:column;gap:6px}.metrics strong{font-size:2rem}.metrics span,.hint{color:#64748b}.controls{display:flex;flex-wrap:wrap;align-items:end;gap:16px}.controls label{display:flex;flex-direction:column;gap:6px}.controls label.switch{flex-direction:row;align-items:center}.controls input:not([type=checkbox]){padding:10px;border:1px solid #94a3b8;border-radius:10px;min-width:190px}.tasks{list-style:none;padding:0;margin:0}.task{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 4px;border-bottom:1px solid #e2e8f0}.task label{display:flex;align-items:center;gap:10px}.task small{color:#64748b;white-space:nowrap}.done{text-decoration:line-through;color:#64748b}@media(max-width:600px){.shell{margin:18px auto}.task{align-items:start;flex-direction:column}.controls{align-items:stretch;flex-direction:column}.controls label.switch{align-self:start}header{align-items:center}}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: #f1f5f9;
+  color: #172033;
+  font-family:
+    system-ui,
+    -apple-system,
+    Arial,
+    sans-serif;
+}
+button,
+input {
+  font: inherit;
+}
+button {
+  border: 0;
+  border-radius: 10px;
+  background: #253b85;
+  color: #fff;
+  padding: 11px 16px;
+  cursor: pointer;
+}
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid #f59e0b;
+  outline-offset: 2px;
+}
+.shell {
+  width: min(1100px, calc(100% - 32px));
+  margin: 36px auto;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: start;
+}
+h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin: 0;
+}
+h2 {
+  margin-top: 0;
+}
+header p {
+  color: #64748b;
+}
+.eyebrow {
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  font-size: 0.75rem;
+}
+.tag {
+  background: #dbeafe;
+  color: #1e40af;
+  padding: 8px 14px;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: 14px;
+  margin: 22px 0;
+}
+.panel {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: 0 6px 18px #14213d08;
+}
+.metrics .panel {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.metrics strong {
+  font-size: 2rem;
+}
+.metrics span,
+.hint {
+  color: #64748b;
+}
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 16px;
+}
+.controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.controls label.switch {
+  flex-direction: row;
+  align-items: center;
+}
+.controls input:not([type='checkbox']) {
+  padding: 10px;
+  border: 1px solid #94a3b8;
+  border-radius: 10px;
+  min-width: 190px;
+}
+.tasks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.task {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 4px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.task label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.task small {
+  color: #64748b;
+  white-space: nowrap;
+}
+.done {
+  text-decoration: line-through;
+  color: #64748b;
+}
+@media (max-width: 600px) {
+  .shell {
+    margin: 18px auto;
+  }
+  .task {
+    align-items: start;
+    flex-direction: column;
+  }
+  .controls {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .controls label.switch {
+    align-self: start;
+  }
+  header {
+    align-items: center;
+  }
+}

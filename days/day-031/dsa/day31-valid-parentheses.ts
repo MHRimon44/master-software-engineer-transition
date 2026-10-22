@@ -2,13 +2,13 @@ function isValidParentheses(input: string): boolean {
   const stack: string[] = [];
 
   const pairs: Record<string, string> = {
-    ")": "(",
-    "]": "[",
-    "}": "{",
+    ')': '(',
+    ']': '[',
+    '}': '{',
   };
 
   for (const char of input) {
-    if (char === "(" || char === "[" || char === "{") {
+    if (char === '(' || char === '[' || char === '{') {
       stack.push(char);
       continue;
     }
@@ -29,7 +29,7 @@ function isValidParentheses(input: string): boolean {
   return stack.length === 0;
 }
 
-const testCases = ["()", "()[]{}", "(]", "([{}])", "([)]", "{[]}", "(", "]"];
+const testCases = ['()', '()[]{}', '(]', '([{}])', '([)]', '{[]}', '(', ']'];
 
 for (const testCase of testCases) {
   console.log(`${testCase} -> ${isValidParentheses(testCase)}`);

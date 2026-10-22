@@ -28,9 +28,7 @@ export class InitialSchema1790404877951 implements MigrationInterface {
     await queryRunner.query(`DROP TABLE "comments"`);
     await queryRunner.query(`DROP TABLE "project_tasks"`);
     await queryRunner.query(`DROP TABLE "project_memberships"`);
-    await queryRunner.query(
-      `DROP TYPE "public"."project_memberships_role_enum"`,
-    );
+    await queryRunner.query(`DROP TYPE "public"."project_memberships_role_enum"`);
     await queryRunner.query(`DROP TABLE "projects"`);
     await queryRunner.query(`DROP TABLE "users"`);
   }

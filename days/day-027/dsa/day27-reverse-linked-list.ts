@@ -34,20 +34,17 @@ function printList(head: ListNode | null): void {
     current = current.next;
   }
 
-  console.log(values.join(" -> "));
+  console.log(values.join(' -> '));
 }
 
-const head = new ListNode(
-  1,
-  new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))),
-);
+const head = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
 
-console.log("Before:");
+console.log('Before:');
 
 printList(head);
 
 const reversed = reverseList(head);
 
-console.log("After:");
+console.log('After:');
 
 printList(reversed);

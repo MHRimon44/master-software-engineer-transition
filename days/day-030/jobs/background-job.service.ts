@@ -22,19 +22,14 @@ export class BackgroundJobService {
 
         return;
       } catch (error) {
-        const message =
-          error instanceof Error ? error.message : 'Unknown error';
+        const message = error instanceof Error ? error.message : 'Unknown error';
 
         this.logger.warn(
-          `job=${name} status=failed attempt=${attempt} error=${JSON.stringify(
-            message,
-          )}`,
+          `job=${name} status=failed attempt=${attempt} error=${JSON.stringify(message)}`,
         );
 
         if (attempt === maxAttempts) {
-          this.logger.error(
-            `job=${name} status=exhausted attempts=${maxAttempts}`,
-          );
+          this.logger.error(`job=${name} status=exhausted attempts=${maxAttempts}`);
 
           return;
         }

@@ -34,7 +34,7 @@ function inorderTraversal(root: TreeNode | null): number[] {
     const node = stack.pop();
 
     if (node === undefined) {
-      throw new Error("Unexpected empty stack");
+      throw new Error('Unexpected empty stack');
     }
 
     result.push(node.val);
@@ -46,20 +46,16 @@ function inorderTraversal(root: TreeNode | null): number[] {
   return result;
 }
 
-function runTest(
-  name: string,
-  root: TreeNode | null,
-  expected: number[],
-): void {
+function runTest(name: string, root: TreeNode | null, expected: number[]): void {
   const actual = inorderTraversal(root);
 
   const passed = JSON.stringify(actual) === JSON.stringify(expected);
 
-  console.log(`${passed ? "PASS" : "FAIL"} | ${name}`);
+  console.log(`${passed ? 'PASS' : 'FAIL'} | ${name}`);
 
-  console.log("Expected:", JSON.stringify(expected));
+  console.log('Expected:', JSON.stringify(expected));
 
-  console.log("Actual:  ", JSON.stringify(actual));
+  console.log('Actual:  ', JSON.stringify(actual));
 
   if (!passed) {
     throw new Error(`Test failed: ${name}`);
@@ -67,10 +63,10 @@ function runTest(
 }
 
 // Test 1: Empty tree
-runTest("Empty tree", null, []);
+runTest('Empty tree', null, []);
 
 // Test 2: Single node
-runTest("Single node", new TreeNode(1), [1]);
+runTest('Single node', new TreeNode(1), [1]);
 
 // Test 3: Balanced tree
 const balancedTree = new TreeNode(
@@ -79,20 +75,16 @@ const balancedTree = new TreeNode(
   new TreeNode(3),
 );
 
-runTest("Balanced tree", balancedTree, [4, 2, 5, 1, 3]);
+runTest('Balanced tree', balancedTree, [4, 2, 5, 1, 3]);
 
 // Test 4: Left-skewed tree
 const leftSkewed = new TreeNode(3, new TreeNode(2, new TreeNode(1)));
 
-runTest("Left-skewed tree", leftSkewed, [1, 2, 3]);
+runTest('Left-skewed tree', leftSkewed, [1, 2, 3]);
 
 // Test 5: Right-skewed tree
-const rightSkewed = new TreeNode(
-  1,
-  null,
-  new TreeNode(2, null, new TreeNode(3)),
-);
+const rightSkewed = new TreeNode(1, null, new TreeNode(2, null, new TreeNode(3)));
 
-runTest("Right-skewed tree", rightSkewed, [1, 2, 3]);
+runTest('Right-skewed tree', rightSkewed, [1, 2, 3]);
 
-console.log("All Day 39 DSA tests passed!");
+console.log('All Day 39 DSA tests passed!');

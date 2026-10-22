@@ -72,9 +72,7 @@ describe('AuthService', () => {
 
       const savedUser = {
         ...user,
-        id:
-          user.id ??
-          `00000000-0000-0000-0000-${String(userSequence).padStart(12, '0')}`,
+        id: user.id ?? `00000000-0000-0000-0000-${String(userSequence).padStart(12, '0')}`,
         createdAt: user.createdAt ?? new Date('2026-01-01T00:00:00.000Z'),
       } as UserEntity;
 
@@ -224,25 +222,19 @@ describe('AuthService', () => {
 
     const refreshedTokens = await service.refresh(oldRefreshToken);
 
-    expect(refreshedTokens.accessToken).toEqual(
-      expect.stringContaining('access-token-'),
-    );
+    expect(refreshedTokens.accessToken).toEqual(expect.stringContaining('access-token-'));
 
-    expect(refreshedTokens.refreshToken).toEqual(
-      expect.stringContaining('refresh-token-'),
-    );
+    expect(refreshedTokens.refreshToken).toEqual(expect.stringContaining('refresh-token-'));
 
     expect(refreshedTokens.refreshToken).not.toBe(oldRefreshToken);
 
-    await expect(service.refresh(oldRefreshToken)).rejects.toBeInstanceOf(
-      UnauthorizedException,
-    );
+    await expect(service.refresh(oldRefreshToken)).rejects.toBeInstanceOf(UnauthorizedException);
   });
 
   it('should reject an invalid refresh token', async () => {
-    await expect(
-      service.refresh('not-a-real-refresh-token'),
-    ).rejects.toBeInstanceOf(UnauthorizedException);
+    await expect(service.refresh('not-a-real-refresh-token')).rejects.toBeInstanceOf(
+      UnauthorizedException,
+    );
   });
 
   it('should revoke refresh token on logout', async () => {
@@ -260,9 +252,7 @@ describe('AuthService', () => {
 
     await service.logout(refreshToken);
 
-    await expect(service.refresh(refreshToken)).rejects.toBeInstanceOf(
-      UnauthorizedException,
-    );
+    await expect(service.refresh(refreshToken)).rejects.toBeInstanceOf(UnauthorizedException);
   });
 
   it('should not issue tokens when password is incorrect', async () => {

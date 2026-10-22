@@ -1,7 +1,9 @@
 // Day 51 DSA: LRU Cache — O(1) average get and put using Map insertion order.
 class LRUCache {
   private cache = new Map<number, number>();
-  constructor(private capacity: number) { if (capacity <= 0) throw new Error('capacity must be positive'); }
+  constructor(private capacity: number) {
+    if (capacity <= 0) throw new Error('capacity must be positive');
+  }
   get(key: number): number {
     if (!this.cache.has(key)) return -1;
     const value = this.cache.get(key)!;
@@ -19,7 +21,8 @@ class LRUCache {
   }
 }
 const cache = new LRUCache(2);
-cache.put(1, 1); cache.put(2, 2);
+cache.put(1, 1);
+cache.put(2, 2);
 console.assert(cache.get(1) === 1);
 cache.put(3, 3);
 console.assert(cache.get(2) === -1);

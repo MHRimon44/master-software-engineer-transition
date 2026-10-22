@@ -1,9 +1,4 @@
-import {
-  CanActivate,
-  ExecutionContext,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import { AppConfigService } from '../../day-019/config/app-config.service';
@@ -40,12 +35,9 @@ export class AccessTokenGuard implements CanActivate {
     let payload: AccessTokenPayload;
 
     try {
-      payload = await this.jwtService.verifyAsync<AccessTokenPayload>(
-        accessToken,
-        {
-          secret: this.appConfig.jwtAccessSecret,
-        },
-      );
+      payload = await this.jwtService.verifyAsync<AccessTokenPayload>(accessToken, {
+        secret: this.appConfig.jwtAccessSecret,
+      });
     } catch {
       throw new UnauthorizedException('invalid or expired access token');
     }

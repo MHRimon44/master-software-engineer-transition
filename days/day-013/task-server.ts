@@ -1,4 +1,4 @@
-import { createServer } from "node:http";
+import { createServer } from 'node:http';
 
 type Task = {
   id: number;
@@ -6,39 +6,39 @@ type Task = {
   completed: boolean;
 };
 
-const tasks: Task[] = [{ id: 1, title: "Learn Node HTTP", completed: false }];
+const tasks: Task[] = [{ id: 1, title: 'Learn Node HTTP', completed: false }];
 
 const server = createServer((req, res) => {
-  res.setHeader("Content-Type", "application/json");
+  res.setHeader('Content-Type', 'application/json');
   console.log(req.method, req.url);
-  if (req.method === "GET" && req.url === "/health") {
+  if (req.method === 'GET' && req.url === '/health') {
     res.statusCode = 200;
-    res.end(JSON.stringify({ status: "ok" }));
+    res.end(JSON.stringify({ status: 'ok' }));
     return;
   }
-  if (req.method === "GET" && req.url === "/tasks") {
+  if (req.method === 'GET' && req.url === '/tasks') {
     res.statusCode = 200;
     res.end(JSON.stringify(tasks));
     return;
   }
 
-  if (req.method === "POST" && req.url === "/tasks") {
-    let body = "";
+  if (req.method === 'POST' && req.url === '/tasks') {
+    let body = '';
 
-    req.on("data", (chunk) => {
+    req.on('data', (chunk) => {
       body += chunk;
     });
 
-    req.on("end", () => {
+    req.on('end', () => {
       try {
         const data = JSON.parse(body);
 
-        if (typeof data.title !== "string" || data.title.trim() === "") {
+        if (typeof data.title !== 'string' || data.title.trim() === '') {
           res.statusCode = 400;
 
           res.end(
             JSON.stringify({
-              message: "Title is required",
+              message: 'Title is required',
             }),
           );
 
@@ -61,7 +61,7 @@ const server = createServer((req, res) => {
 
         res.end(
           JSON.stringify({
-            message: "Invalid JSON",
+            message: 'Invalid JSON',
           }),
         );
       }
@@ -70,15 +70,15 @@ const server = createServer((req, res) => {
     return;
   }
 
-  if (req.method === "GET" && req.url?.startsWith("/tasks/")) {
-    const id = Number(req.url.split("/")[2]);
+  if (req.method === 'GET' && req.url?.startsWith('/tasks/')) {
+    const id = Number(req.url.split('/')[2]);
 
     if (Number.isNaN(id)) {
       res.statusCode = 400;
 
       res.end(
         JSON.stringify({
-          message: "Invalid task id",
+          message: 'Invalid task id',
         }),
       );
 
@@ -92,7 +92,7 @@ const server = createServer((req, res) => {
 
       res.end(
         JSON.stringify({
-          message: "Task not found",
+          message: 'Task not found',
         }),
       );
 
@@ -106,15 +106,15 @@ const server = createServer((req, res) => {
     return;
   }
 
-  if (req.method === "DELETE" && req.url?.startsWith("/tasks/")) {
-    const id = Number(req.url.split("/")[2]);
+  if (req.method === 'DELETE' && req.url?.startsWith('/tasks/')) {
+    const id = Number(req.url.split('/')[2]);
 
     if (Number.isNaN(id)) {
       res.statusCode = 400;
 
       res.end(
         JSON.stringify({
-          message: "Invalid task id",
+          message: 'Invalid task id',
         }),
       );
 
@@ -128,7 +128,7 @@ const server = createServer((req, res) => {
 
       res.end(
         JSON.stringify({
-          message: "Task not found",
+          message: 'Task not found',
         }),
       );
 
@@ -144,18 +144,14 @@ const server = createServer((req, res) => {
     return;
   }
 
-  if (
-    req.url === "/health" ||
-    req.url === "/tasks" ||
-    req.url?.startsWith("/tasks/")
-  ) {
+  if (req.url === '/health' || req.url === '/tasks' || req.url?.startsWith('/tasks/')) {
     res.statusCode = 405;
 
-    res.setHeader("Allow", "GET, POST, DELETE");
+    res.setHeader('Allow', 'GET, POST, DELETE');
 
     res.end(
       JSON.stringify({
-        message: "Method Not Allowed",
+        message: 'Method Not Allowed',
       }),
     );
 
@@ -166,11 +162,11 @@ const server = createServer((req, res) => {
 
   res.end(
     JSON.stringify({
-      error: "Not Found",
+      error: 'Not Found',
     }),
   );
 });
 
 server.listen(3000, () => {
-  console.log("Server running on http://localhost:3000");
+  console.log('Server running on http://localhost:3000');
 });

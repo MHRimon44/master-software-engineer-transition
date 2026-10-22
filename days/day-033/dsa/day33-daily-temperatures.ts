@@ -31,10 +31,7 @@ function dailyTemperatures(temperatures: number[]): number[] {
 
       const previousTemperature = temperatures[previousDay];
 
-      if (
-        previousTemperature === undefined ||
-        previousTemperature >= currentTemperature
-      ) {
+      if (previousTemperature === undefined || previousTemperature >= currentTemperature) {
         break;
       }
 
@@ -54,12 +51,12 @@ function dailyTemperatures(temperatures: number[]): number[] {
 // TEST CASES
 // ----------------------
 
-console.log("Test 1:", dailyTemperatures([73, 74, 75, 71, 69, 72, 76, 73]));
+console.log('Test 1:', dailyTemperatures([73, 74, 75, 71, 69, 72, 76, 73]));
 
-console.log("Test 2:", dailyTemperatures([30, 40, 50, 60]));
+console.log('Test 2:', dailyTemperatures([30, 40, 50, 60]));
 
-console.log("Test 3:", dailyTemperatures([30, 60, 90]));
+console.log('Test 3:', dailyTemperatures([30, 60, 90]));
 
-console.log("Test 4:", dailyTemperatures([90, 80, 70]));
+console.log('Test 4:', dailyTemperatures([90, 80, 70]));
 
-console.log("Test 5:", dailyTemperatures([]));
+console.log('Test 5:', dailyTemperatures([]));

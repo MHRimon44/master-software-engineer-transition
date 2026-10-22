@@ -1,20 +1,20 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import type { ReactNode } from "react";
-type Theme = "light" | "dark";
+import { createContext, useContext, useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
+type Theme = 'light' | 'dark';
 type ThemeValue = { theme: Theme; toggleTheme: () => void };
 const ThemeContext = createContext<ThemeValue | null>(null);
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
     try {
-      return localStorage.getItem("day47-theme") === "dark" ? "dark" : "light";
+      return localStorage.getItem('day47-theme') === 'dark' ? 'dark' : 'light';
     } catch {
-      return "light";
+      return 'light';
     }
   });
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     try {
-      localStorage.setItem("day47-theme", theme);
+      localStorage.setItem('day47-theme', theme);
     } catch {
       /* private mode */
     }
@@ -23,7 +23,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     <ThemeContext.Provider
       value={{
         theme,
-        toggleTheme: () => setTheme((t) => (t === "dark" ? "light" : "dark")),
+        toggleTheme: () => setTheme((t) => (t === 'dark' ? 'light' : 'dark')),
       }}
     >
       {children}
@@ -32,6 +32,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 }
 export function useTheme() {
   const context = useContext(ThemeContext);
-  if (!context) throw new Error("useTheme must be inside ThemeProvider");
+  if (!context) throw new Error('useTheme must be inside ThemeProvider');
   return context;
 }

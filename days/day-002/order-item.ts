@@ -7,7 +7,7 @@ export interface OrderItem {
 
 const orderItem: OrderItem = {
   productId: 101,
-  productName: "Cotton Shirt",
+  productName: 'Cotton Shirt',
   unitPrice: 1200,
   quantity: 2,
 };

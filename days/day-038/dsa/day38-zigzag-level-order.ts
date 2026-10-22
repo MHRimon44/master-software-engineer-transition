@@ -33,7 +33,7 @@ function zigzagLevelOrder(root: TreeNode | null): number[][] {
       const node = queue[head];
 
       if (node === undefined) {
-        throw new Error("Unexpected empty queue");
+        throw new Error('Unexpected empty queue');
       }
 
       head++;
@@ -58,20 +58,16 @@ function zigzagLevelOrder(root: TreeNode | null): number[][] {
   return result;
 }
 
-function runTest(
-  name: string,
-  root: TreeNode | null,
-  expected: number[][],
-): void {
+function runTest(name: string, root: TreeNode | null, expected: number[][]): void {
   const actual = zigzagLevelOrder(root);
 
   const passed = JSON.stringify(actual) === JSON.stringify(expected);
 
-  console.log(`${passed ? "PASS" : "FAIL"} | ${name}`);
+  console.log(`${passed ? 'PASS' : 'FAIL'} | ${name}`);
 
-  console.log("Expected:", JSON.stringify(expected));
+  console.log('Expected:', JSON.stringify(expected));
 
-  console.log("Actual:  ", JSON.stringify(actual));
+  console.log('Actual:  ', JSON.stringify(actual));
 
   if (!passed) {
     throw new Error(`Test failed: ${name}`);
@@ -79,10 +75,10 @@ function runTest(
 }
 
 // Test 1: Empty tree
-runTest("Empty tree", null, []);
+runTest('Empty tree', null, []);
 
 // Test 2: Single node
-runTest("Single node", new TreeNode(1), [[1]]);
+runTest('Single node', new TreeNode(1), [[1]]);
 
 // Test 3: Balanced tree
 const balancedTree = new TreeNode(
@@ -91,12 +87,12 @@ const balancedTree = new TreeNode(
   new TreeNode(20, new TreeNode(15), new TreeNode(7)),
 );
 
-runTest("Balanced tree", balancedTree, [[3], [20, 9], [15, 7]]);
+runTest('Balanced tree', balancedTree, [[3], [20, 9], [15, 7]]);
 
 // Test 4: Left-skewed tree
 const leftSkewed = new TreeNode(1, new TreeNode(2, new TreeNode(3)));
 
-runTest("Left-skewed tree", leftSkewed, [[1], [2], [3]]);
+runTest('Left-skewed tree', leftSkewed, [[1], [2], [3]]);
 
 // Test 5: Complete tree
 const completeTree = new TreeNode(
@@ -105,6 +101,6 @@ const completeTree = new TreeNode(
   new TreeNode(3, new TreeNode(6), new TreeNode(7)),
 );
 
-runTest("Complete tree", completeTree, [[1], [3, 2], [4, 5, 6, 7]]);
+runTest('Complete tree', completeTree, [[1], [3, 2], [4, 5, 6, 7]]);
 
-console.log("All Day 38 DSA tests passed!");
+console.log('All Day 38 DSA tests passed!');

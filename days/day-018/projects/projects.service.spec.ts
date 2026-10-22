@@ -50,9 +50,8 @@ describe('ProjectsService', () => {
     entityManagerMock.getRepository.mockReturnValue(membershipRepositoryMock);
 
     dataSourceMock.transaction.mockImplementation(
-      async (
-        callback: (manager: typeof entityManagerMock) => Promise<unknown>,
-      ) => callback(entityManagerMock),
+      async (callback: (manager: typeof entityManagerMock) => Promise<unknown>) =>
+        callback(entityManagerMock),
     );
 
     redisCacheServiceMock.get.mockResolvedValue(null);
@@ -61,9 +60,7 @@ describe('ProjectsService', () => {
 
     backgroundJobServiceMock.runWithRetry.mockResolvedValue(undefined);
 
-    notificationServiceMock.sendProjectCreatedNotification.mockResolvedValue(
-      undefined,
-    );
+    notificationServiceMock.sendProjectCreatedNotification.mockResolvedValue(undefined);
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -138,11 +135,7 @@ describe('ProjectsService', () => {
 
     expect(projectsRepositoryMock.findAll).toHaveBeenCalledTimes(1);
 
-    expect(redisCacheServiceMock.set).toHaveBeenCalledWith(
-      'projects:all',
-      projects,
-      60,
-    );
+    expect(redisCacheServiceMock.set).toHaveBeenCalledWith('projects:all', projects, 60);
   });
 
   it('should create a project, invalidate cache, and schedule notification', async () => {
@@ -180,9 +173,7 @@ describe('ProjectsService', () => {
       'Team Task API',
     );
 
-    expect(entityManagerMock.getRepository).toHaveBeenCalledWith(
-      ProjectMembershipEntity,
-    );
+    expect(entityManagerMock.getRepository).toHaveBeenCalledWith(ProjectMembershipEntity);
 
     expect(membershipRepositoryMock.create).toHaveBeenCalledWith({
       projectId: 1,
@@ -240,8 +231,9 @@ describe('ProjectsService', () => {
 
     await scheduledJob!();
 
-    expect(
-      notificationServiceMock.sendProjectCreatedNotification,
-    ).toHaveBeenCalledWith(2, 'Background Job Project');
+    expect(notificationServiceMock.sendProjectCreatedNotification).toHaveBeenCalledWith(
+      2,
+      'Background Job Project',
+    );
   });
 });

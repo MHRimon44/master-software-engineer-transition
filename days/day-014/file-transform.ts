@@ -1,6 +1,6 @@
-import { readFile, writeFile } from "node:fs/promises";
-import { EventEmitter } from "node:events";
-import { createHash } from "node:crypto";
+import { readFile, writeFile } from 'node:fs/promises';
+import { EventEmitter } from 'node:events';
+import { createHash } from 'node:crypto';
 
 type Product = {
   id: number;
@@ -15,73 +15,73 @@ type OutputProduct = Product & {
 const emitter = new EventEmitter();
 
 function isProduct(value: unknown): value is Product {
-  if (typeof value !== "object" || value === null) {
+  if (typeof value !== 'object' || value === null) {
     return false;
   }
 
   const product = value as Record<string, unknown>;
 
   return (
-    typeof product.id === "number" &&
-    typeof product.name === "string" &&
-    typeof product.price === "number"
+    typeof product.id === 'number' &&
+    typeof product.name === 'string' &&
+    typeof product.price === 'number'
   );
 }
 
 function validateProducts(value: unknown): Product[] {
   if (!Array.isArray(value)) {
-    throw new Error("Expected an array");
+    throw new Error('Expected an array');
   }
 
   if (!value.every(isProduct)) {
-    throw new Error("Invalid product shape");
+    throw new Error('Invalid product shape');
   }
 
   return value;
 }
 
 const onProgress = (message: string) => {
-  console.log("Progress:", message);
+  console.log('Progress:', message);
 };
 
-emitter.on("progress", onProgress);
+emitter.on('progress', onProgress);
 
 try {
-  const inputPath = new URL("./data/input.json", import.meta.url);
+  const inputPath = new URL('./data/input.json', import.meta.url);
 
-  const outputPath = new URL("./data/output.json", import.meta.url);
+  const outputPath = new URL('./data/output.json', import.meta.url);
 
-  emitter.emit("progress", "Reading input");
+  emitter.emit('progress', 'Reading input');
 
-  const content = await readFile(inputPath, "utf8");
+  const content = await readFile(inputPath, 'utf8');
 
-  emitter.emit("progress", "Parsing JSON");
+  emitter.emit('progress', 'Parsing JSON');
 
   const parsed: unknown = JSON.parse(content);
 
   const products = validateProducts(parsed);
 
-  emitter.emit("progress", "Transforming data");
+  emitter.emit('progress', 'Transforming data');
 
   const transformed: OutputProduct[] = products.map((product) => ({
     ...product,
     displayName: `${product.name} - $${product.price}`,
   }));
 
-  emitter.emit("progress", "Writing output");
+  emitter.emit('progress', 'Writing output');
 
-  await writeFile(outputPath, JSON.stringify(transformed, null, 2), "utf8");
+  await writeFile(outputPath, JSON.stringify(transformed, null, 2), 'utf8');
 
   const outputBuffer = await readFile(outputPath);
 
-  const hash = createHash("sha256").update(outputBuffer).digest("hex");
+  const hash = createHash('sha256').update(outputBuffer).digest('hex');
 
-  console.log("SHA-256:", hash);
+  console.log('SHA-256:', hash);
 
-  emitter.emit("complete", {
+  emitter.emit('complete', {
     outputPath,
     hash,
   });
 } finally {
-  emitter.off("progress", onProgress);
+  emitter.off('progress', onProgress);
 }

@@ -21,9 +21,10 @@ export class ProjectRolesGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const requiredPermissions = this.reflector.getAllAndOverride<
-      ProjectPermission[]
-    >(PERMISSIONS_KEY, [context.getHandler(), context.getClass()]);
+    const requiredPermissions = this.reflector.getAllAndOverride<ProjectPermission[]>(
+      PERMISSIONS_KEY,
+      [context.getHandler(), context.getClass()],
+    );
 
     if (!requiredPermissions?.length) {
       return true;
@@ -39,10 +40,7 @@ export class ProjectRolesGuard implements CanActivate {
       throw new BadRequestException('projectId must be a positive integer');
     }
 
-    const membership = await this.projectAccessService.findMembership(
-      projectId,
-      request.user.id,
-    );
+    const membership = await this.projectAccessService.findMembership(projectId, request.user.id);
 
     if (!membership) {
       throw new ForbiddenException('project access denied');

@@ -1,34 +1,34 @@
 export type PaymentResult =
   | {
-      status: "SUCCESS";
+      status: 'SUCCESS';
       transactionId: string;
       amount: number;
     }
   | {
-      status: "FAILED";
+      status: 'FAILED';
       errorCode: string;
       message: string;
     }
   | {
-      status: "CANCELLED";
+      status: 'CANCELLED';
       reason: string;
     };
 
 const successResult: PaymentResult = {
-  status: "SUCCESS",
-  transactionId: "TXN-1001",
+  status: 'SUCCESS',
+  transactionId: 'TXN-1001',
   amount: 2500,
 };
 
 const failedResult: PaymentResult = {
-  status: "FAILED",
-  errorCode: "PAYMENT_DECLINED",
-  message: "Card was declined",
+  status: 'FAILED',
+  errorCode: 'PAYMENT_DECLINED',
+  message: 'Card was declined',
 };
 
 const cancelledResult: PaymentResult = {
-  status: "CANCELLED",
-  reason: "user cancelled payment",
+  status: 'CANCELLED',
+  reason: 'user cancelled payment',
 };
 
 // const invalidResult: PaymentResult = {
@@ -43,11 +43,11 @@ function assertNever(value: never): never {
 
 export function formatPaymentResult(result: PaymentResult): string {
   switch (result.status) {
-    case "SUCCESS":
+    case 'SUCCESS':
       return `Payment successful. Transaction: ${result.transactionId}, Amount: ${result.amount}`;
-    case "FAILED":
+    case 'FAILED':
       return `Payment failed. Error: ${result.errorCode}, Message: ${result.message}`;
-    case "CANCELLED":
+    case 'CANCELLED':
       return `Payment cancelled. Reason: ${result.reason}`;
     default:
       return assertNever(result);

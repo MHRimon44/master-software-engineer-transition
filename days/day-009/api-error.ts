@@ -4,26 +4,26 @@ export type ApiError = {
 };
 
 export function isApiError(value: unknown): value is ApiError {
-  if (typeof value !== "object" || value === null) {
+  if (typeof value !== 'object' || value === null) {
     return false;
   }
 
   return (
-    "code" in value &&
-    "message" in value &&
-    typeof value.code === "string" &&
-    typeof value.message === "string"
+    'code' in value &&
+    'message' in value &&
+    typeof value.code === 'string' &&
+    typeof value.message === 'string'
   );
 }
 
 const response1: unknown = {
-  code: "PAYMENT_FAILED",
-  message: "Payment could not be completed",
+  code: 'PAYMENT_FAILED',
+  message: 'Payment could not be completed',
 };
 
 const response2: unknown = {
   code: 500,
-  message: "Server error",
+  message: 'Server error',
 };
 
 if (isApiError(response1)) {

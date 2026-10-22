@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Headers,
-  Param,
-  Patch,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Headers, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiHeader, ApiParam } from '@nestjs/swagger';
 
 import { AccessTokenGuard } from '../../day-025/auth/access-token.guard';
@@ -36,8 +28,7 @@ export class ProjectTasksController {
     name: 'idempotency-key',
     required: false,
     example: 'create-project-task-abc-123',
-    description:
-      'Optional idempotency key with a maximum length of 128 characters',
+    description: 'Optional idempotency key with a maximum length of 128 characters',
   })
   create(
     @Param('projectId', PositiveIntPipe)

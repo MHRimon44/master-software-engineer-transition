@@ -19,12 +19,7 @@ import { TasksController } from './tasks.controller';
 import { TasksService } from './tasks.service';
 
 @Module({
-  imports: [
-    AuthModule,
-    ProjectsModule,
-
-    TypeOrmModule.forFeature([ProjectTaskEntity]),
-  ],
+  imports: [AuthModule, ProjectsModule, TypeOrmModule.forFeature([ProjectTaskEntity])],
 
   controllers: [TasksController, ProjectTasksController],
 

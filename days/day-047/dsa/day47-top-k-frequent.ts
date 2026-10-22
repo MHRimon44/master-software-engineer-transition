@@ -31,18 +31,8 @@ class MinHeap {
         let m = i;
         const l = i * 2 + 1;
         const r = l + 1;
-        if (
-          this.items[l] &&
-          this.items[m] &&
-          this.items[l]!.count < this.items[m]!.count
-        )
-          m = l;
-        if (
-          this.items[r] &&
-          this.items[m] &&
-          this.items[r]!.count < this.items[m]!.count
-        )
-          m = r;
+        if (this.items[l] && this.items[m] && this.items[l]!.count < this.items[m]!.count) m = l;
+        if (this.items[r] && this.items[m] && this.items[r]!.count < this.items[m]!.count) m = r;
         if (m === i) break;
         const a = this.items[i];
         const b = this.items[m];
@@ -77,10 +67,10 @@ function test(name: string, input: number[], k: number, expected: number[]) {
     throw new Error(`FAIL ${name}: ${actual} != ${want}`);
   console.log(`PASS | ${name}`);
 }
-test("Standard", [1, 1, 1, 2, 2, 3], 2, [1, 2]);
-test("Single", [1], 1, [1]);
-test("Negative", [-1, -1, 2, 2, 2, 3], 1, [2]);
-test("All distinct k=n", [4, 5, 6], 3, [4, 5, 6]);
-test("Empty", [], 2, []);
-console.log("All Day 47 Top-K tests passed!");
+test('Standard', [1, 1, 1, 2, 2, 3], 2, [1, 2]);
+test('Single', [1], 1, [1]);
+test('Negative', [-1, -1, 2, 2, 2, 3], 1, [2]);
+test('All distinct k=n', [4, 5, 6], 3, [4, 5, 6]);
+test('Empty', [], 2, []);
+console.log('All Day 47 Top-K tests passed!');
 export {};

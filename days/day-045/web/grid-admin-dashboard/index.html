@@ -3,10 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="Day 45 responsive CSS Grid admin dashboard"
-    />
+    <meta name="description" content="Day 45 responsive CSS Grid admin dashboard" />
     <title>Day 45 | Grid Admin</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="app.js" defer></script>
@@ -29,12 +26,7 @@
             <p class="eyebrow">Workspace / Overview</p>
             <h1>Admin dashboard</h1>
           </div>
-          <button
-            class="btn btn-secondary"
-            id="theme-button"
-            type="button"
-            aria-pressed="false"
-          >
+          <button class="btn btn-secondary" id="theme-button" type="button" aria-pressed="false">
             Dark mode
           </button>
         </header>
@@ -64,25 +56,15 @@
             </div>
           </section>
           <div class="admin-grid">
-            <section
-              class="card projects-panel"
-              id="projects"
-              aria-labelledby="projects-title"
-            >
+            <section class="card projects-panel" id="projects" aria-labelledby="projects-title">
               <div class="section-head">
                 <h2 id="projects-title">Projects</h2>
                 <span class="pill" id="project-count">0 projects</span>
               </div>
               <div class="project-grid" id="project-grid"></div>
-              <p class="empty" id="empty">
-                No projects yet. Create one using the form.
-              </p>
+              <p class="empty" id="empty">No projects yet. Create one using the form.</p>
             </section>
-            <aside
-              class="card form-panel"
-              id="new-project"
-              aria-labelledby="form-title"
-            >
+            <aside class="card form-panel" id="new-project" aria-labelledby="form-title">
               <h2 id="form-title">Create project</h2>
               <p class="muted">Reusable input, select and button primitives.</p>
               <form id="project-form">
@@ -114,13 +96,9 @@
                     <option value="completed">Completed</option>
                   </select>
                 </div>
-                <button class="btn btn-primary" type="submit">
-                  Add project
-                </button>
+                <button class="btn btn-primary" type="submit">Add project</button>
               </form>
-              <p class="hint">
-                Try resizing the browser: 375, 768, 1024 and 1440 px.
-              </p>
+              <p class="hint">Try resizing the browser: 375, 768, 1024 and 1440 px.</p>
             </aside>
           </div>
         </main>

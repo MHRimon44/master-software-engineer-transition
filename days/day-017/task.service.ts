@@ -1,4 +1,4 @@
-import type { CreateTaskInput, Task, UpdateTaskInput } from "./task.types.js";
+import type { CreateTaskInput, Task, UpdateTaskInput } from './task.types.js';
 
 const tasks: Task[] = [];
 
@@ -20,10 +20,7 @@ export function getTaskById(id: string): Task | undefined {
   return tasks.find((task) => task.id === id);
 }
 
-export function updateTask(
-  id: string,
-  input: UpdateTaskInput,
-): Task | undefined {
+export function updateTask(id: string, input: UpdateTaskInput): Task | undefined {
   const task = tasks.find((task) => task.id === id);
   if (!task) {
     return undefined;

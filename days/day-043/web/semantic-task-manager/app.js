@@ -1,15 +1,15 @@
-"use strict";
+'use strict';
 
-const STORAGE_KEY = "taskflow-day43-tasks";
+const STORAGE_KEY = 'taskflow-day43-tasks';
 
-const form = document.querySelector("#task-form");
-const titleInput = document.querySelector("#task-title");
-const priorityInput = document.querySelector("#task-priority");
-const dateInput = document.querySelector("#task-date");
-const taskList = document.querySelector("#task-list");
-const emptyState = document.querySelector("#empty-state");
-const taskCount = document.querySelector("#task-count");
-const statusMessage = document.querySelector("#status-message");
+const form = document.querySelector('#task-form');
+const titleInput = document.querySelector('#task-title');
+const priorityInput = document.querySelector('#task-priority');
+const dateInput = document.querySelector('#task-date');
+const taskList = document.querySelector('#task-list');
+const emptyState = document.querySelector('#empty-state');
+const taskCount = document.querySelector('#task-count');
+const statusMessage = document.querySelector('#status-message');
 
 function loadTasks() {
   try {
@@ -24,14 +24,14 @@ function loadTasks() {
     return parsed.filter(
       (task) =>
         task &&
-        typeof task.id === "string" &&
-        typeof task.title === "string" &&
-        typeof task.completed === "boolean" &&
-        ["low", "medium", "high"].includes(task.priority) &&
-        typeof task.dueDate === "string",
+        typeof task.id === 'string' &&
+        typeof task.title === 'string' &&
+        typeof task.completed === 'boolean' &&
+        ['low', 'medium', 'high'].includes(task.priority) &&
+        typeof task.dueDate === 'string',
     );
   } catch (error) {
-    console.error("Failed to load tasks:", error);
+    console.error('Failed to load tasks:', error);
     return [];
   }
 }
@@ -42,13 +42,13 @@ function saveTasks() {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
   } catch (error) {
-    console.error("Failed to save tasks:", error);
-    announce("Tasks could not be saved.");
+    console.error('Failed to save tasks:', error);
+    announce('Tasks could not be saved.');
   }
 }
 
 function announce(message) {
-  statusMessage.textContent = "";
+  statusMessage.textContent = '';
 
   requestAnimationFrame(() => {
     statusMessage.textContent = message;
@@ -56,42 +56,41 @@ function announce(message) {
 }
 
 function formatDate(dateValue) {
-  if (!dateValue) return "";
+  if (!dateValue) return '';
 
-  const [year, month, day] = dateValue.split("-");
+  const [year, month, day] = dateValue.split('-');
 
   return `${day}/${month}/${year}`;
 }
 
 function createTaskElement(task) {
-  const item = document.createElement("li");
-  item.className = "task-item";
+  const item = document.createElement('li');
+  item.className = 'task-item';
 
   if (task.completed) {
-    item.classList.add("completed");
+    item.classList.add('completed');
   }
 
-  const content = document.createElement("div");
-  content.className = "task-content";
+  const content = document.createElement('div');
+  content.className = 'task-content';
 
-  const checkbox = document.createElement("input");
-  checkbox.type = "checkbox";
+  const checkbox = document.createElement('input');
+  checkbox.type = 'checkbox';
   checkbox.checked = task.completed;
   checkbox.id = `task-${task.id}`;
 
-  const details = document.createElement("div");
-  details.className = "task-details";
+  const details = document.createElement('div');
+  details.className = 'task-details';
 
-  const title = document.createElement("label");
-  title.className = "task-title";
+  const title = document.createElement('label');
+  title.className = 'task-title';
   title.htmlFor = checkbox.id;
   title.textContent = task.title;
 
-  const meta = document.createElement("p");
-  meta.className = "task-meta";
+  const meta = document.createElement('p');
+  meta.className = 'task-meta';
 
-  const priorityText =
-    task.priority.charAt(0).toUpperCase() + task.priority.slice(1);
+  const priorityText = task.priority.charAt(0).toUpperCase() + task.priority.slice(1);
 
   meta.textContent = task.dueDate
     ? `${priorityText} priority • Due ${formatDate(task.dueDate)}`
@@ -100,13 +99,13 @@ function createTaskElement(task) {
   details.append(title, meta);
   content.append(checkbox, details);
 
-  const deleteButton = document.createElement("button");
-  deleteButton.type = "button";
-  deleteButton.className = "delete-button";
-  deleteButton.textContent = "Delete";
-  deleteButton.setAttribute("aria-label", `Delete task: ${task.title}`);
+  const deleteButton = document.createElement('button');
+  deleteButton.type = 'button';
+  deleteButton.className = 'delete-button';
+  deleteButton.textContent = 'Delete';
+  deleteButton.setAttribute('aria-label', `Delete task: ${task.title}`);
 
-  checkbox.addEventListener("change", () => {
+  checkbox.addEventListener('change', () => {
     task.completed = checkbox.checked;
 
     saveTasks();
@@ -116,14 +115,10 @@ function createTaskElement(task) {
 
     updatedCheckbox?.focus();
 
-    announce(
-      task.completed
-        ? `Completed: ${task.title}`
-        : `Marked incomplete: ${task.title}`,
-    );
+    announce(task.completed ? `Completed: ${task.title}` : `Marked incomplete: ${task.title}`);
   });
 
-  deleteButton.addEventListener("click", () => {
+  deleteButton.addEventListener('click', () => {
     const taskIndex = tasks.findIndex((item) => item.id === task.id);
 
     if (taskIndex === -1) return;
@@ -133,12 +128,10 @@ function createTaskElement(task) {
     saveTasks();
     renderTasks();
 
-    const remainingDeleteButtons = taskList.querySelectorAll(".delete-button");
+    const remainingDeleteButtons = taskList.querySelectorAll('.delete-button');
 
     const nextButton =
-      remainingDeleteButtons[
-        Math.min(taskIndex, remainingDeleteButtons.length - 1)
-      ];
+      remainingDeleteButtons[Math.min(taskIndex, remainingDeleteButtons.length - 1)];
 
     if (nextButton) {
       nextButton.focus();
@@ -164,26 +157,23 @@ function renderTasks() {
   const total = tasks.length;
   const completed = tasks.filter((task) => task.completed).length;
 
-  taskCount.textContent =
-    `${total} task${total === 1 ? "" : "s"} • ` + `${completed} completed`;
+  taskCount.textContent = `${total} task${total === 1 ? '' : 's'} • ` + `${completed} completed`;
 
   emptyState.hidden = total > 0;
 }
 
-form.addEventListener("submit", (event) => {
+form.addEventListener('submit', (event) => {
   event.preventDefault();
 
   const title = titleInput.value.trim();
 
   if (title.length < 3 || title.length > 100) {
-    titleInput.setCustomValidity(
-      "Enter a task title between 3 and 100 characters.",
-    );
+    titleInput.setCustomValidity('Enter a task title between 3 and 100 characters.');
     titleInput.reportValidity();
     return;
   }
 
-  titleInput.setCustomValidity("");
+  titleInput.setCustomValidity('');
 
   const task = {
     id: crypto.randomUUID(),
@@ -204,8 +194,8 @@ form.addEventListener("submit", (event) => {
   announce(`Task added: ${task.title}`);
 });
 
-titleInput.addEventListener("input", () => {
-  titleInput.setCustomValidity("");
+titleInput.addEventListener('input', () => {
+  titleInput.setCustomValidity('');
 });
 
 renderTasks();

@@ -1,16 +1,9 @@
-import {
-  Injectable,
-  Logger,
-  OnApplicationBootstrap,
-  OnApplicationShutdown,
-} from '@nestjs/common';
+import { Injectable, Logger, OnApplicationBootstrap, OnApplicationShutdown } from '@nestjs/common';
 
 import { AppConfigService } from './config/app-config.service';
 
 @Injectable()
-export class AppLifecycleService
-  implements OnApplicationBootstrap, OnApplicationShutdown
-{
+export class AppLifecycleService implements OnApplicationBootstrap, OnApplicationShutdown {
   private readonly logger = new Logger(AppLifecycleService.name);
 
   constructor(private readonly appConfig: AppConfigService) {}

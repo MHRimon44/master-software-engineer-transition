@@ -8,10 +8,7 @@ class ListNode {
   }
 }
 
-function mergeTwoLists(
-  list1: ListNode | null,
-  list2: ListNode | null,
-): ListNode | null {
+function mergeTwoLists(list1: ListNode | null, list2: ListNode | null): ListNode | null {
   const dummy = new ListNode();
   let current = dummy;
 

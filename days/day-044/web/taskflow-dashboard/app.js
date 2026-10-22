@@ -1,35 +1,35 @@
-"use strict";
+'use strict';
 
 /* =====================================
    STORAGE KEYS
 ===================================== */
 
-const TASK_STORAGE_KEY = "day44-taskflow-tasks";
-const THEME_STORAGE_KEY = "day44-taskflow-theme";
+const TASK_STORAGE_KEY = 'day44-taskflow-tasks';
+const THEME_STORAGE_KEY = 'day44-taskflow-theme';
 
 /* =====================================
    DOM REFERENCES
 ===================================== */
 
-const taskForm = document.querySelector("#task-form");
-const taskTitleInput = document.querySelector("#task-title");
-const taskPriorityInput = document.querySelector("#task-priority");
+const taskForm = document.querySelector('#task-form');
+const taskTitleInput = document.querySelector('#task-title');
+const taskPriorityInput = document.querySelector('#task-priority');
 
-const taskList = document.querySelector("#task-list");
-const emptyState = document.querySelector("#empty-state");
+const taskList = document.querySelector('#task-list');
+const emptyState = document.querySelector('#empty-state');
 
-const totalCount = document.querySelector("#total-count");
-const completedCount = document.querySelector("#completed-count");
-const pendingCount = document.querySelector("#pending-count");
+const totalCount = document.querySelector('#total-count');
+const completedCount = document.querySelector('#completed-count');
+const pendingCount = document.querySelector('#pending-count');
 
-const taskCountLabel = document.querySelector("#task-count-label");
+const taskCountLabel = document.querySelector('#task-count-label');
 
-const progressTrack = document.querySelector("#progress-track");
-const progressFill = document.querySelector("#progress-fill");
-const progressLabel = document.querySelector("#progress-label");
+const progressTrack = document.querySelector('#progress-track');
+const progressFill = document.querySelector('#progress-fill');
+const progressLabel = document.querySelector('#progress-label');
 
-const themeToggle = document.querySelector("#theme-toggle");
-const announcement = document.querySelector("#announcement");
+const themeToggle = document.querySelector('#theme-toggle');
+const announcement = document.querySelector('#announcement');
 
 /* =====================================
    STATE
@@ -58,14 +58,14 @@ function loadTasks() {
     return parsed.filter((task) => {
       return (
         task &&
-        typeof task.id === "string" &&
-        typeof task.title === "string" &&
-        typeof task.priority === "string" &&
-        typeof task.completed === "boolean"
+        typeof task.id === 'string' &&
+        typeof task.title === 'string' &&
+        typeof task.priority === 'string' &&
+        typeof task.completed === 'boolean'
       );
     });
   } catch (error) {
-    console.error("Failed to load tasks:", error);
+    console.error('Failed to load tasks:', error);
     return [];
   }
 }
@@ -74,8 +74,8 @@ function saveTasks() {
   try {
     localStorage.setItem(TASK_STORAGE_KEY, JSON.stringify(tasks));
   } catch (error) {
-    console.error("Failed to save tasks:", error);
-    announce("Unable to save tasks to browser storage.");
+    console.error('Failed to save tasks:', error);
+    announce('Unable to save tasks to browser storage.');
   }
 }
 
@@ -84,7 +84,7 @@ function saveTasks() {
 ===================================== */
 
 function announce(message) {
-  announcement.textContent = "";
+  announcement.textContent = '';
 
   requestAnimationFrame(() => {
     announcement.textContent = message;
@@ -130,11 +130,7 @@ function toggleTask(id) {
   saveTasks();
   render();
 
-  announce(
-    task.completed
-      ? `Task completed: ${task.title}`
-      : `Task marked pending: ${task.title}`,
-  );
+  announce(task.completed ? `Task completed: ${task.title}` : `Task marked pending: ${task.title}`);
 }
 
 /* =====================================
@@ -161,34 +157,34 @@ function deleteTask(id) {
 ===================================== */
 
 function createTaskElement(task) {
-  const li = document.createElement("li");
+  const li = document.createElement('li');
 
-  li.className = "task-item";
+  li.className = 'task-item';
 
   if (task.completed) {
-    li.classList.add("completed");
+    li.classList.add('completed');
   }
 
-  const checkbox = document.createElement("input");
+  const checkbox = document.createElement('input');
 
-  checkbox.type = "checkbox";
-  checkbox.className = "task-checkbox";
+  checkbox.type = 'checkbox';
+  checkbox.className = 'task-checkbox';
   checkbox.checked = task.completed;
 
-  checkbox.setAttribute("aria-label", `Mark ${task.title} as completed`);
+  checkbox.setAttribute('aria-label', `Mark ${task.title} as completed`);
 
-  checkbox.addEventListener("change", () => {
+  checkbox.addEventListener('change', () => {
     toggleTask(task.id);
   });
 
-  const info = document.createElement("div");
-  info.className = "task-info";
+  const info = document.createElement('div');
+  info.className = 'task-info';
 
-  const title = document.createElement("span");
-  title.className = "task-title";
+  const title = document.createElement('span');
+  title.className = 'task-title';
   title.textContent = task.title;
 
-  const priority = document.createElement("span");
+  const priority = document.createElement('span');
 
   priority.className = `priority-badge priority-${task.priority}`;
 
@@ -196,15 +192,15 @@ function createTaskElement(task) {
 
   info.append(title, priority);
 
-  const deleteButton = document.createElement("button");
+  const deleteButton = document.createElement('button');
 
-  deleteButton.type = "button";
-  deleteButton.className = "delete-button";
-  deleteButton.textContent = "Delete";
+  deleteButton.type = 'button';
+  deleteButton.className = 'delete-button';
+  deleteButton.textContent = 'Delete';
 
-  deleteButton.setAttribute("aria-label", `Delete task ${task.title}`);
+  deleteButton.setAttribute('aria-label', `Delete task ${task.title}`);
 
-  deleteButton.addEventListener("click", () => {
+  deleteButton.addEventListener('click', () => {
     deleteTask(task.id);
   });
 
@@ -226,7 +222,7 @@ function renderTasks() {
 
   emptyState.hidden = tasks.length > 0;
 
-  taskCountLabel.textContent = `${tasks.length} ${tasks.length === 1 ? "task" : "tasks"}`;
+  taskCountLabel.textContent = `${tasks.length} ${tasks.length === 1 ? 'task' : 'tasks'}`;
 }
 
 /* =====================================
@@ -250,7 +246,7 @@ function renderStats() {
 
   progressLabel.textContent = `${progress}% completed`;
 
-  progressTrack.setAttribute("aria-valuenow", String(progress));
+  progressTrack.setAttribute('aria-valuenow', String(progress));
 }
 
 /* =====================================
@@ -266,7 +262,7 @@ function render() {
    FORM SUBMISSION
 ===================================== */
 
-taskForm.addEventListener("submit", (event) => {
+taskForm.addEventListener('submit', (event) => {
   event.preventDefault();
 
   if (!taskForm.reportValidity()) {
@@ -277,15 +273,13 @@ taskForm.addEventListener("submit", (event) => {
   const priority = taskPriorityInput.value;
 
   if (title.length < 3) {
-    taskTitleInput.setCustomValidity(
-      "Task title must contain at least 3 characters.",
-    );
+    taskTitleInput.setCustomValidity('Task title must contain at least 3 characters.');
 
     taskTitleInput.reportValidity();
     return;
   }
 
-  taskTitleInput.setCustomValidity("");
+  taskTitleInput.setCustomValidity('');
 
   createTask(title, priority);
 
@@ -294,8 +288,8 @@ taskForm.addEventListener("submit", (event) => {
   taskTitleInput.focus();
 });
 
-taskTitleInput.addEventListener("input", () => {
-  taskTitleInput.setCustomValidity("");
+taskTitleInput.addEventListener('input', () => {
+  taskTitleInput.setCustomValidity('');
 });
 
 /* =====================================
@@ -303,41 +297,36 @@ taskTitleInput.addEventListener("input", () => {
 ===================================== */
 
 function applyTheme(theme) {
-  const isDark = theme === "dark";
+  const isDark = theme === 'dark';
 
-  document.body.classList.toggle("dark-theme", isDark);
+  document.body.classList.toggle('dark-theme', isDark);
 
-  themeToggle.textContent = isDark ? "Light Mode" : "Dark Mode";
+  themeToggle.textContent = isDark ? 'Light Mode' : 'Dark Mode';
 
-  themeToggle.setAttribute(
-    "aria-label",
-    isDark ? "Switch to light mode" : "Switch to dark mode",
-  );
+  themeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
 
-  themeToggle.setAttribute("aria-pressed", String(isDark));
+  themeToggle.setAttribute('aria-pressed', String(isDark));
 }
 
 function loadTheme() {
   try {
-    return localStorage.getItem(THEME_STORAGE_KEY) === "dark"
-      ? "dark"
-      : "light";
+    return localStorage.getItem(THEME_STORAGE_KEY) === 'dark' ? 'dark' : 'light';
   } catch {
-    return "light";
+    return 'light';
   }
 }
 
-themeToggle.addEventListener("click", () => {
-  const isDark = document.body.classList.contains("dark-theme");
+themeToggle.addEventListener('click', () => {
+  const isDark = document.body.classList.contains('dark-theme');
 
-  const nextTheme = isDark ? "light" : "dark";
+  const nextTheme = isDark ? 'light' : 'dark';
 
   applyTheme(nextTheme);
 
   try {
     localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
   } catch (error) {
-    console.error("Failed to save theme:", error);
+    console.error('Failed to save theme:', error);
   }
 
   announce(`${nextTheme} mode enabled`);

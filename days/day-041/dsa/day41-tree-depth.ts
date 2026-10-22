@@ -29,7 +29,7 @@ function runTest(name: string, root: TreeNode | null, expected: number): void {
   const actual = maxDepth(root);
   const passed = actual === expected;
 
-  console.log(`${passed ? "PASS" : "FAIL"} | ${name}`);
+  console.log(`${passed ? 'PASS' : 'FAIL'} | ${name}`);
 
   if (!passed) {
     throw new Error(`${name}: expected ${expected}, got ${actual}`);
@@ -37,10 +37,10 @@ function runTest(name: string, root: TreeNode | null, expected: number): void {
 }
 
 // Test 1: Empty tree
-runTest("Empty tree", null, 0);
+runTest('Empty tree', null, 0);
 
 // Test 2: Single node
-runTest("Single node", new TreeNode(1), 1);
+runTest('Single node', new TreeNode(1), 1);
 
 // Test 3: Balanced tree
 const balanced = new TreeNode(
@@ -49,24 +49,17 @@ const balanced = new TreeNode(
   new TreeNode(20, new TreeNode(15), new TreeNode(7)),
 );
 
-runTest("Balanced tree", balanced, 3);
+runTest('Balanced tree', balanced, 3);
 
 // Test 4: Left-skewed tree
-const leftSkewed = new TreeNode(
-  1,
-  new TreeNode(2, new TreeNode(3, new TreeNode(4))),
-);
+const leftSkewed = new TreeNode(1, new TreeNode(2, new TreeNode(3, new TreeNode(4))));
 
-runTest("Left-skewed tree", leftSkewed, 4);
+runTest('Left-skewed tree', leftSkewed, 4);
 
 // Test 5: Right-skewed tree
-const rightSkewed = new TreeNode(
-  1,
-  null,
-  new TreeNode(2, null, new TreeNode(3)),
-);
+const rightSkewed = new TreeNode(1, null, new TreeNode(2, null, new TreeNode(3)));
 
-runTest("Right-skewed tree", rightSkewed, 3);
+runTest('Right-skewed tree', rightSkewed, 3);
 
 // Test 6: Uneven tree
 const uneven = new TreeNode(
@@ -75,6 +68,6 @@ const uneven = new TreeNode(
   new TreeNode(15, new TreeNode(12, new TreeNode(11))),
 );
 
-runTest("Uneven tree", uneven, 4);
+runTest('Uneven tree', uneven, 4);
 
-console.log("All Day 41 DSA tests passed!");
+console.log('All Day 41 DSA tests passed!');

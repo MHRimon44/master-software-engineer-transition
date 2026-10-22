@@ -6,11 +6,7 @@ class TreeNode {
   ) {}
 }
 
-function lowestCommonAncestor(
-  root: TreeNode | null,
-  p: TreeNode,
-  q: TreeNode,
-): TreeNode | null {
+function lowestCommonAncestor(root: TreeNode | null, p: TreeNode, q: TreeNode): TreeNode | null {
   let current = root;
 
   while (current !== null) {
@@ -26,13 +22,7 @@ function lowestCommonAncestor(
   return null;
 }
 
-function runTest(
-  name: string,
-  root: TreeNode,
-  p: TreeNode,
-  q: TreeNode,
-  expected: number,
-): void {
+function runTest(name: string, root: TreeNode, p: TreeNode, q: TreeNode, expected: number): void {
   const actual = lowestCommonAncestor(root, p, q)?.val ?? null;
 
   if (actual !== expected) {
@@ -54,11 +44,11 @@ const n8 = new TreeNode(8, n7, n9);
 
 const root = new TreeNode(6, n2, n8);
 
-runTest("Opposite sides", root, n2, n8, 6);
-runTest("Ancestor is target", root, n2, n4, 2);
-runTest("Left subtree", root, n3, n5, 4);
-runTest("Right subtree", root, n7, n9, 8);
-runTest("Root is target", root, root, n5, 6);
-runTest("Same node", root, n4, n4, 4);
+runTest('Opposite sides', root, n2, n8, 6);
+runTest('Ancestor is target', root, n2, n4, 2);
+runTest('Left subtree', root, n3, n5, 4);
+runTest('Right subtree', root, n7, n9, 8);
+runTest('Root is target', root, root, n5, 6);
+runTest('Same node', root, n4, n4, 4);
 
-console.log("All Day 43 LCA tests passed!");
+console.log('All Day 43 LCA tests passed!');

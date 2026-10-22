@@ -21,10 +21,7 @@ export class ProjectsRepository {
     });
   }
 
-  createWithManager(
-    manager: EntityManager,
-    name: string,
-  ): Promise<ProjectEntity> {
+  createWithManager(manager: EntityManager, name: string): Promise<ProjectEntity> {
     const repository = manager.getRepository(ProjectEntity);
 
     const project = repository.create({

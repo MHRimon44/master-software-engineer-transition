@@ -29,9 +29,7 @@ function isValidBST(root: TreeNode | null): boolean {
       return false;
     }
 
-    return (
-      validate(node.left, min, node.val) && validate(node.right, node.val, max)
-    );
+    return validate(node.left, min, node.val) && validate(node.right, node.val, max);
   }
 
   return validate(root, -Infinity, Infinity);
@@ -41,7 +39,7 @@ function runTest(name: string, root: TreeNode | null, expected: boolean): void {
   const actual = isValidBST(root);
   const passed = actual === expected;
 
-  console.log(`${passed ? "PASS" : "FAIL"} | ${name}`);
+  console.log(`${passed ? 'PASS' : 'FAIL'} | ${name}`);
 
   console.log(`Expected: ${expected}, Actual: ${actual}`);
 
@@ -51,10 +49,10 @@ function runTest(name: string, root: TreeNode | null, expected: boolean): void {
 }
 
 // Test 1: Empty tree
-runTest("Empty tree", null, true);
+runTest('Empty tree', null, true);
 
 // Test 2: Single node
-runTest("Single node", new TreeNode(10), true);
+runTest('Single node', new TreeNode(10), true);
 
 // Test 3: Valid BST
 const validTree = new TreeNode(
@@ -63,12 +61,12 @@ const validTree = new TreeNode(
   new TreeNode(12, new TreeNode(10), new TreeNode(14)),
 );
 
-runTest("Valid BST", validTree, true);
+runTest('Valid BST', validTree, true);
 
 // Test 4: Invalid immediate child
 const invalidChild = new TreeNode(10, new TreeNode(12), new TreeNode(15));
 
-runTest("Invalid immediate child", invalidChild, false);
+runTest('Invalid immediate child', invalidChild, false);
 
 // Test 5: Invalid deeper subtree
 const invalidSubtree = new TreeNode(
@@ -77,16 +75,16 @@ const invalidSubtree = new TreeNode(
   new TreeNode(15, new TreeNode(6), new TreeNode(20)),
 );
 
-runTest("Invalid deeper subtree", invalidSubtree, false);
+runTest('Invalid deeper subtree', invalidSubtree, false);
 
 // Test 6: Duplicate value
 const duplicateTree = new TreeNode(5, new TreeNode(5), new TreeNode(7));
 
-runTest("Duplicate value", duplicateTree, false);
+runTest('Duplicate value', duplicateTree, false);
 
 // Test 7: Valid negative values
 const negativeTree = new TreeNode(-5, new TreeNode(-10), new TreeNode(0));
 
-runTest("Negative values", negativeTree, true);
+runTest('Negative values', negativeTree, true);
 
-console.log("All Day 40 DSA tests passed!");
+console.log('All Day 40 DSA tests passed!');

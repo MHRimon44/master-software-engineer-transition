@@ -1,6 +1,6 @@
-import type { ErrorRequestHandler } from "express";
+import type { ErrorRequestHandler } from 'express';
 
-import { AppError } from "./app-error.js";
+import { AppError } from './app-error.js';
 
 export const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
   if (error instanceof AppError) {
@@ -18,8 +18,8 @@ export const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
 
   res.status(500).json({
     error: {
-      code: "INTERNAL_SERVER_ERROR",
-      message: "Something went wrong",
+      code: 'INTERNAL_SERVER_ERROR',
+      message: 'Something went wrong',
     },
   });
 };

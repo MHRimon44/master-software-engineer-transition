@@ -43,9 +43,7 @@ describe('ProjectRolesGuard', () => {
   });
 
   it('should reject a member without update-task permission', async () => {
-    reflectorMock.getAllAndOverride.mockReturnValue([
-      ProjectPermission.UPDATE_TASK,
-    ]);
+    reflectorMock.getAllAndOverride.mockReturnValue([ProjectPermission.UPDATE_TASK]);
 
     projectAccessServiceMock.findMembership.mockResolvedValue({
       projectId: 1,
@@ -55,15 +53,11 @@ describe('ProjectRolesGuard', () => {
 
     const context = createContext('member-user', '1');
 
-    await expect(guard.canActivate(context)).rejects.toThrow(
-      ForbiddenException,
-    );
+    await expect(guard.canActivate(context)).rejects.toThrow(ForbiddenException);
   });
 
   it('should allow an admin with update-task permission', async () => {
-    reflectorMock.getAllAndOverride.mockReturnValue([
-      ProjectPermission.UPDATE_TASK,
-    ]);
+    reflectorMock.getAllAndOverride.mockReturnValue([ProjectPermission.UPDATE_TASK]);
 
     projectAccessServiceMock.findMembership.mockResolvedValue({
       projectId: 1,
@@ -77,17 +71,13 @@ describe('ProjectRolesGuard', () => {
   });
 
   it('should reject a user with no membership in the target project', async () => {
-    reflectorMock.getAllAndOverride.mockReturnValue([
-      ProjectPermission.UPDATE_TASK,
-    ]);
+    reflectorMock.getAllAndOverride.mockReturnValue([ProjectPermission.UPDATE_TASK]);
 
     projectAccessServiceMock.findMembership.mockResolvedValue(null);
 
     const context = createContext('outsider-user', '1');
 
-    await expect(guard.canActivate(context)).rejects.toThrow(
-      ForbiddenException,
-    );
+    await expect(guard.canActivate(context)).rejects.toThrow(ForbiddenException);
   });
 
   it('should allow when no permissions metadata is defined', async () => {
@@ -101,9 +91,7 @@ describe('ProjectRolesGuard', () => {
   });
 
   it('should allow a member with create-task permission', async () => {
-    reflectorMock.getAllAndOverride.mockReturnValue([
-      ProjectPermission.CREATE_TASK,
-    ]);
+    reflectorMock.getAllAndOverride.mockReturnValue([ProjectPermission.CREATE_TASK]);
 
     projectAccessServiceMock.findMembership.mockResolvedValue({
       projectId: 1,

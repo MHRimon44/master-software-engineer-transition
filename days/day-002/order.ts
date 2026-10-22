@@ -1,5 +1,5 @@
-import { OrderItem } from "./order-item.js";
-import { PaymentStatus } from "./payment.js";
+import { OrderItem } from './order-item.js';
+import { PaymentStatus } from './payment.js';
 
 export interface Order {
   readonly id: number;
@@ -15,12 +15,12 @@ const order: Order = {
   items: [
     {
       productId: 101,
-      productName: "Cotton Shirt",
+      productName: 'Cotton Shirt',
       unitPrice: 1200,
       quantity: 2,
     },
   ],
-  paymentStatus: "PAID",
+  paymentStatus: 'PAID',
 };
 
 export function calculateOrderTotal(order: Order): number {

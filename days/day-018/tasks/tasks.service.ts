@@ -1,9 +1,4 @@
-import {
-  ForbiddenException,
-  Inject,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { ForbiddenException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 
 import { CLOCK, type Clock } from '../../day-019/common/clock';
 import type { CreateTaskDto } from '../../day-020/tasks/dto/create-task.dto';
@@ -60,9 +55,7 @@ export class TasksService {
       : allTasks;
 
     const searchedTasks = query.q
-      ? filteredTasks.filter((task) =>
-          task.title.toLowerCase().includes(query.q!.toLowerCase()),
-        )
+      ? filteredTasks.filter((task) => task.title.toLowerCase().includes(query.q!.toLowerCase()))
       : filteredTasks;
 
     const sortedTasks = [...searchedTasks].sort((a, b) => {
@@ -71,13 +64,10 @@ export class TasksService {
       if (query.sortBy === TaskSortField.TITLE) {
         comparison = a.title.localeCompare(b.title);
       } else {
-        comparison =
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+        comparison = new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
       }
 
-      return query.sortDirection === SortDirection.ASC
-        ? comparison
-        : -comparison;
+      return query.sortDirection === SortDirection.ASC ? comparison : -comparison;
     });
 
     const offset = (query.page - 1) * query.limit;
@@ -125,19 +115,11 @@ export class TasksService {
       updatedAt: this.clock.now().toISOString(),
     };
   }
-  async createForProject(
-    projectId: number,
-    input: CreateTaskDto,
-    _idempotencyKey?: string,
-  ) {
+  async createForProject(projectId: number, input: CreateTaskDto, _idempotencyKey?: string) {
     return this.projectTasksRepository.create(projectId, input.title);
   }
 
-  async updateForProject(
-    projectId: number,
-    taskId: number,
-    input: UpdateTaskDto,
-  ) {
+  async updateForProject(projectId: number, taskId: number, input: UpdateTaskDto) {
     const task = await this.projectTasksRepository.findById(taskId);
 
     if (!task) {

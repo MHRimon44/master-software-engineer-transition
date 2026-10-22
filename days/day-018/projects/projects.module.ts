@@ -19,20 +19,11 @@ import { ProjectsRepository } from '../../day-027/projects/projects.repository';
 import { ProjectsService } from './projects.service';
 
 @Module({
-  imports: [
-    AuthModule,
-
-    TypeOrmModule.forFeature([ProjectEntity, ProjectMembershipEntity]),
-  ],
+  imports: [AuthModule, TypeOrmModule.forFeature([ProjectEntity, ProjectMembershipEntity])],
 
   controllers: [ProjectsController],
 
-  providers: [
-    ProjectsService,
-    ProjectsRepository,
-    ProjectAccessService,
-    ProjectRolesGuard,
-  ],
+  providers: [ProjectsService, ProjectsRepository, ProjectAccessService, ProjectRolesGuard],
 
   exports: [ProjectAccessService, ProjectRolesGuard],
 })

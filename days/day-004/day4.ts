@@ -16,10 +16,7 @@ async function getOrderTotal(): Promise<number> {
   return order.total;
 }
 
-async function retryAsync<T>(
-  operation: () => Promise<T>,
-  attempts: number,
-): Promise<T> {
+async function retryAsync<T>(operation: () => Promise<T>, attempts: number): Promise<T> {
   let lastError: unknown;
 
   for (let attempt = 1; attempt <= attempts; attempt++) {
@@ -37,7 +34,7 @@ async function retryAsync<T>(
 async function testGetOrderTotal() {
   const total = await getOrderTotal();
 
-  console.log("Order total:", total);
+  console.log('Order total:', total);
 }
 
 // Test 2: First attempt fails, second succeeds
@@ -48,16 +45,16 @@ async function testRetrySuccess() {
     callCount++;
 
     if (callCount === 1) {
-      throw new Error("Temporary failure");
+      throw new Error('Temporary failure');
     }
 
-    return "success";
+    return 'success';
   };
 
   const result = await retryAsync(operation, 2);
 
-  console.log("Retry result:", result);
-  console.log("Call count:", callCount);
+  console.log('Retry result:', result);
+  console.log('Call count:', callCount);
 }
 
 // Test 3: All attempts fail
@@ -67,14 +64,14 @@ async function testRetryFailure() {
   const operation = async () => {
     callCount++;
 
-    throw new Error("API failed");
+    throw new Error('API failed');
   };
 
   try {
     await retryAsync(operation, 2);
   } catch (error) {
-    console.log("Error:", error);
-    console.log("Call count:", callCount);
+    console.log('Error:', error);
+    console.log('Call count:', callCount);
   }
 }
 

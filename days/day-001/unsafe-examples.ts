@@ -12,22 +12,22 @@ interface Customer {
 
 const customer: Customer = {
   id: 1,
-  name: "Mehedi",
+  name: 'Mehedi',
 };
 
-console.log(customer.phone?.toUpperCase() ?? "N/A");
+console.log(customer.phone?.toUpperCase() ?? 'N/A');
 
 // 3. Unsafe array access
 const products: string[] = [];
 const firstProduct = products[0];
-console.log(firstProduct?.toUpperCase() ?? "N/A");
+console.log(firstProduct?.toUpperCase() ?? 'N/A');
 
 // 4. Possibly undefined function result
 function findProduct(id: number) {
   if (id === 1) {
     return {
       id: 1,
-      name: "Shirt",
+      name: 'Shirt',
     };
   }
 
@@ -48,14 +48,14 @@ const update: UpdateCustomer = {};
 const prices: Record<string, number> = {
   shirt: 500,
 };
-const shoePrice = prices["shoe"];
+const shoePrice = prices['shoe'];
 if (shoePrice !== undefined) {
   console.log(shoePrice * 2);
 }
 
 // 7. Unknown error
 try {
-  throw new Error("Payment failed");
+  throw new Error('Payment failed');
 } catch (error) {
   if (error instanceof Error) {
     console.log(error.message);

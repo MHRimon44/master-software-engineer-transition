@@ -20,8 +20,8 @@ function lengthOfLongestSubstring(s: string): number {
   return maxLength;
 }
 
-console.log(lengthOfLongestSubstring("abcabcbb")); // 3
-console.log(lengthOfLongestSubstring("bbbbb")); // 1
-console.log(lengthOfLongestSubstring("pwwkew")); // 3
-console.log(lengthOfLongestSubstring("")); // 0
-console.log(lengthOfLongestSubstring("abcdef")); // 6
+console.log(lengthOfLongestSubstring('abcabcbb')); // 3
+console.log(lengthOfLongestSubstring('bbbbb')); // 1
+console.log(lengthOfLongestSubstring('pwwkew')); // 3
+console.log(lengthOfLongestSubstring('')); // 0
+console.log(lengthOfLongestSubstring('abcdef')); // 6

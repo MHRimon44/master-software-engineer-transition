@@ -7,7 +7,7 @@ const grants: Record<Role, readonly Permission[]> = {
   admin: ['dashboard:read', 'projects:write', 'admin:read'],
 };
 export function isRole(value: unknown): value is Role {
-  return typeof value === 'string' && roles.some(role => role === value);
+  return typeof value === 'string' && roles.some((role) => role === value);
 }
 export function can(role: Role, permission: Permission): boolean {
   return grants[role].includes(permission);

@@ -60,7 +60,7 @@ function runTest(input: number[], expected: number[]): void {
   const passed = JSON.stringify(actual) === JSON.stringify(expected);
 
   console.log(
-    `${passed ? "PASS" : "FAIL"} | ${JSON.stringify(input)} => ${JSON.stringify(actual)}`,
+    `${passed ? 'PASS' : 'FAIL'} | ${JSON.stringify(input)} => ${JSON.stringify(actual)}`,
   );
 
   if (!passed) {
@@ -74,4 +74,4 @@ runTest([5], [5]);
 runTest([], []);
 runTest([1, 1, 2], [2, 1, 1]);
 
-console.log("All Day 35 DSA tests passed!");
+console.log('All Day 35 DSA tests passed!');

@@ -171,28 +171,28 @@ footer {
   font-size: 12px;
   padding: 12px 0;
 }
-:root[data-theme="dark"] {
+:root[data-theme='dark'] {
   color: #f3f4fa;
   background: #0e1524;
 }
-:root[data-theme="dark"] .card {
+:root[data-theme='dark'] .card {
   background: #19243a;
   border-color: #334155;
 }
-:root[data-theme="dark"] .task-row {
+:root[data-theme='dark'] .task-row {
   border-color: #334155;
 }
-:root[data-theme="dark"] .secondary {
+:root[data-theme='dark'] .secondary {
   background: #334155;
   color: #f3f4fa;
 }
-:root[data-theme="dark"] .eyebrow,
-:root[data-theme="dark"] .stats span,
-:root[data-theme="dark"] footer,
-:root[data-theme="dark"] .empty {
+:root[data-theme='dark'] .eyebrow,
+:root[data-theme='dark'] .stats span,
+:root[data-theme='dark'] footer,
+:root[data-theme='dark'] .empty {
   color: #a9b7d0;
 }
-:root[data-theme="dark"] input {
+:root[data-theme='dark'] input {
   background: #10192b;
   color: white;
   border-color: #475569;

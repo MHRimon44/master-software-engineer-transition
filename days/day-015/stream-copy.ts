@@ -1,7 +1,7 @@
-import { createReadStream, createWriteStream } from "node:fs";
-import { mkdir, stat } from "node:fs/promises";
-import { dirname } from "node:path";
-import { pipeline } from "node:stream/promises";
+import { createReadStream, createWriteStream } from 'node:fs';
+import { mkdir, stat } from 'node:fs/promises';
+import { dirname } from 'node:path';
+import { pipeline } from 'node:stream/promises';
 
 export interface CopyResult {
   bytesProcessed: number;
@@ -24,7 +24,7 @@ export async function copyLargeFile(
 
   const writableStream = createWriteStream(destinationPath);
 
-  readableStream.on("data", (chunk: Buffer) => {
+  readableStream.on('data', (chunk: Buffer) => {
     bytesProcessed += chunk.length;
   });
 

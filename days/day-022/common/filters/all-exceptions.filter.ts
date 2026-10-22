@@ -21,9 +21,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const response = context.getResponse<Response>();
 
     const status =
-      exception instanceof HttpException
-        ? exception.getStatus()
-        : HttpStatus.INTERNAL_SERVER_ERROR;
+      exception instanceof HttpException ? exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
 
     if (!(exception instanceof HttpException)) {
       this.logger.error(
@@ -32,8 +30,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
           method: request.method,
           path: request.path,
           requestId: request.requestId,
-          error:
-            exception instanceof Error ? exception.message : 'Unknown error',
+          error: exception instanceof Error ? exception.message : 'Unknown error',
         }),
         exception instanceof Error ? exception.stack : undefined,
       );

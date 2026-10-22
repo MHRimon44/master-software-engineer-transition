@@ -12,12 +12,14 @@ describe('TaskBoard user behavior', () => {
     expect(await screen.findByText('Review tests')).toBeInTheDocument();
   });
   it('validates an empty task title', async () => {
-    const user = userEvent.setup(); render(<App />);
+    const user = userEvent.setup();
+    render(<App />);
     await user.click(screen.getByRole('button', { name: 'Add task' }));
     expect(screen.getByRole('alert')).toHaveTextContent('Task title is required');
   });
   it('adds a task and can complete and delete it', async () => {
-    const user = userEvent.setup(); render(<App />);
+    const user = userEvent.setup();
+    render(<App />);
     await screen.findByText('Review tests');
     await user.type(screen.getByRole('textbox', { name: 'New task' }), 'Write RTL tests');
     await user.click(screen.getByRole('button', { name: 'Add task' }));

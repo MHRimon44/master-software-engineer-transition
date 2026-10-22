@@ -1,22 +1,22 @@
 function fetchProduct(): Promise<string> {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve("Keyboard");
+      resolve('Keyboard');
     }, 1000);
   });
 }
 
-console.log("Start");
+console.log('Start');
 
 fetchProduct()
   .then((product) => {
     console.log(`Product: ${product}`);
   })
   .catch((error: unknown) => {
-    console.log("Error: ", error);
+    console.log('Error: ', error);
   })
   .finally(() => {
-    console.log("Finished");
+    console.log('Finished');
   });
 
-console.log("End");
+console.log('End');

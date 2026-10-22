@@ -4,14 +4,14 @@ export class RequestTimeoutError extends Error {
     message = `Request timed out after ${timeoutMS}ms`,
   ) {
     super(message);
-    this.name = "RequestTimeoutError";
+    this.name = 'RequestTimeoutError';
   }
 }
 
 export class RequestCancelledError extends Error {
-  constructor(message = "Request was cancelled") {
+  constructor(message = 'Request was cancelled') {
     super(message);
-    this.name = "RequestCancelledError";
+    this.name = 'RequestCancelledError';
   }
 }
 export interface FetchResult<T> {
@@ -20,10 +20,7 @@ export interface FetchResult<T> {
   status: number;
 }
 
-export async function fetchWithTimeout<T>(
-  url: string,
-  timeoutMS: number,
-): Promise<FetchResult<T>> {
+export async function fetchWithTimeout<T>(url: string, timeoutMS: number): Promise<FetchResult<T>> {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => {
     controller.abort();
@@ -48,7 +45,7 @@ export async function fetchWithTimeout<T>(
     if (error instanceof Error) {
       throw error;
     }
-    throw new Error("Unknown fetch error");
+    throw new Error('Unknown fetch error');
   } finally {
     clearTimeout(timeoutId);
   }

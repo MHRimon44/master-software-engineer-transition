@@ -11,11 +11,7 @@ function request(id: number): Promise<string> {
 }
 
 async function main() {
-  const results = await Promise.allSettled([
-    request(1),
-    request(2),
-    request(3),
-  ]);
+  const results = await Promise.allSettled([request(1), request(2), request(3)]);
   console.log(results);
 }
 

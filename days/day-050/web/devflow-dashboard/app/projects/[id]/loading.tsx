@@ -1,1 +1,7 @@
-export default function Loading(){return <div className="card" role="status">Loading project details…</div>}
+export default function Loading() {
+  return (
+    <div className="card" role="status">
+      Loading project details…
+    </div>
+  );
+}

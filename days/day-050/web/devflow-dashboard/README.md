@@ -14,6 +14,7 @@ npm run build
 Open http://localhost:3000 and try /projects, /projects/commerce, and /projects/missing.
 
 ## Concepts
+
 - `app/layout.tsx`: shared root layout and metadata
 - `app/projects/layout.tsx`: nested layout
 - `app/projects/[id]/page.tsx`: dynamic route and `params` (async in Next 15)

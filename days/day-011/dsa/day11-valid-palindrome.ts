@@ -27,6 +27,6 @@ function isAlphaNumeric(char: string | undefined): boolean {
   return /^[a-zA-Z0-9]$/.test(char);
 }
 
-console.log(isPalindrome("A man, a plan, a canal: Panama")); // true
-console.log(isPalindrome("race a car")); // false
-console.log(isPalindrome(" ")); // false
+console.log(isPalindrome('A man, a plan, a canal: Panama')); // true
+console.log(isPalindrome('race a car')); // false
+console.log(isPalindrome(' ')); // false

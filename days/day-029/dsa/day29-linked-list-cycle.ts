@@ -38,7 +38,7 @@ node2.next = node3;
 node3.next = node4;
 node4.next = node2;
 
-console.log("Test 1:", hasCycle(node1));
+console.log('Test 1:', hasCycle(node1));
 // Expected: true
 
 // -------------------------
@@ -52,7 +52,7 @@ const node7 = new ListNode(3);
 node5.next = node6;
 node6.next = node7;
 
-console.log("Test 2:", hasCycle(node5));
+console.log('Test 2:', hasCycle(node5));
 // Expected: false
 
 // -------------------------
@@ -61,7 +61,7 @@ console.log("Test 2:", hasCycle(node5));
 
 const node8 = new ListNode(1);
 
-console.log("Test 3:", hasCycle(node8));
+console.log('Test 3:', hasCycle(node8));
 // Expected: false
 
 // -------------------------
@@ -71,12 +71,12 @@ console.log("Test 3:", hasCycle(node8));
 const node9 = new ListNode(1);
 node9.next = node9;
 
-console.log("Test 4:", hasCycle(node9));
+console.log('Test 4:', hasCycle(node9));
 // Expected: true
 
 // -------------------------
 // Test 5: Empty list
 // -------------------------
 
-console.log("Test 5:", hasCycle(null));
+console.log('Test 5:', hasCycle(null));
 // Expected: false

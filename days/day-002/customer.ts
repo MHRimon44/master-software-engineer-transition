@@ -7,6 +7,6 @@ export interface Customer {
 
 const customer: Customer = {
   id: 1,
-  name: "Mehedi",
-  email: "mehedi@me.com",
+  name: 'Mehedi',
+  email: 'mehedi@me.com',
 };

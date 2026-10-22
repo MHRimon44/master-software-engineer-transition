@@ -26,13 +26,7 @@ export default new DataSource({
 
   database: process.env.DATABASE_NAME ?? 'team_tasks',
 
-  entities: [
-    UserEntity,
-    ProjectEntity,
-    ProjectMembershipEntity,
-    ProjectTaskEntity,
-    CommentEntity,
-  ],
+  entities: [UserEntity, ProjectEntity, ProjectMembershipEntity, ProjectTaskEntity, CommentEntity],
 
   migrations: ['../../days/day-027/database/migrations/*'],
 

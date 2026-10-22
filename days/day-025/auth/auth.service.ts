@@ -1,8 +1,4 @@
-import {
-  ConflictException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
 
 import { JwtService } from '@nestjs/jwt';
 
@@ -83,10 +79,7 @@ export class AuthService {
       throw new UnauthorizedException('invalid email or password');
     }
 
-    const passwordMatches = await bcrypt.compare(
-      input.password,
-      user.passwordHash,
-    );
+    const passwordMatches = await bcrypt.compare(input.password, user.passwordHash);
 
     if (!passwordMatches) {
       throw new UnauthorizedException('invalid email or password');
@@ -108,12 +101,9 @@ export class AuthService {
     let payload: RefreshTokenPayload;
 
     try {
-      payload = await this.jwtService.verifyAsync<RefreshTokenPayload>(
-        refreshToken,
-        {
-          secret: this.appConfig.jwtRefreshSecret,
-        },
-      );
+      payload = await this.jwtService.verifyAsync<RefreshTokenPayload>(refreshToken, {
+        secret: this.appConfig.jwtRefreshSecret,
+      });
     } catch {
       throw new UnauthorizedException('invalid or expired refresh token');
     }
@@ -147,12 +137,9 @@ export class AuthService {
     let payload: RefreshTokenPayload;
 
     try {
-      payload = await this.jwtService.verifyAsync<RefreshTokenPayload>(
-        refreshToken,
-        {
-          secret: this.appConfig.jwtRefreshSecret,
-        },
-      );
+      payload = await this.jwtService.verifyAsync<RefreshTokenPayload>(refreshToken, {
+        secret: this.appConfig.jwtRefreshSecret,
+      });
     } catch {
       throw new UnauthorizedException('invalid or expired refresh token');
     }

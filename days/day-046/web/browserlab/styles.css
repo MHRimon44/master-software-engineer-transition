@@ -95,7 +95,7 @@ label {
   font-weight: 650;
   font-size: 13px;
 }
-input:not([type="checkbox"]),
+input:not([type='checkbox']),
 select {
   width: 100%;
   padding: 11px 12px;

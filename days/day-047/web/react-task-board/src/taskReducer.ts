@@ -6,9 +6,13 @@ export type Action =
   | { type: 'clearCompleted' };
 export function taskReducer(state: Task[], action: Action): Task[] {
   switch (action.type) {
-    case 'add': return [action.task, ...state];
-    case 'toggle': return state.map(t => t.id === action.id ? { ...t, done: !t.done } : t);
-    case 'remove': return state.filter(t => t.id !== action.id);
-    case 'clearCompleted': return state.filter(t => !t.done);
+    case 'add':
+      return [action.task, ...state];
+    case 'toggle':
+      return state.map((t) => (t.id === action.id ? { ...t, done: !t.done } : t));
+    case 'remove':
+      return state.filter((t) => t.id !== action.id);
+    case 'clearCompleted':
+      return state.filter((t) => !t.done);
   }
 }

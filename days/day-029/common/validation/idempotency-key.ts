@@ -2,9 +2,7 @@ import { BadRequestException } from '@nestjs/common';
 
 const MAX_IDEMPOTENCY_KEY_LENGTH = 128;
 
-export function validateIdempotencyKey(
-  value: string | undefined,
-): string | undefined {
+export function validateIdempotencyKey(value: string | undefined): string | undefined {
   if (value === undefined) {
     return undefined;
   }
