@@ -1,0 +1,58 @@
+name: Day 68 - API CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Lint Test Build Docker
+    runs-on: ubuntu-latest
+
+    env:
+      API_DIR: apps/api
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Verify API path
+        run: |
+          test -f "$API_DIR/package.json"
+          test -f "$API_DIR/Dockerfile"
+
+      - name: Install dependencies
+        working-directory: ${{ env.API_DIR }}
+        run: yarn install --immutable
+
+      - name: Lint
+        working-directory: ${{ env.API_DIR }}
+        run: yarn lint
+
+      - name: Test
+        working-directory: ${{ env.API_DIR }}
+        run: yarn test --runInBand
+
+      - name: Build application
+        working-directory: ${{ env.API_DIR }}
+        run: yarn build
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            -t team-task-api:ci \
+            "$API_DIR"
