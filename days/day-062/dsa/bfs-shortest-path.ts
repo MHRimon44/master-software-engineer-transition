@@ -14,7 +14,7 @@ function bfsShortestPath(graph: Graph, start: string, target: string): string[] 
   parent.set(start, null);
 
   while (head < queue.length) {
-    const current = queue[head++];
+    const current = queue[head++]!;
 
     if (current === target) {
       const path: string[] = [];

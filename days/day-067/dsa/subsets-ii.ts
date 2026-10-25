@@ -12,7 +12,7 @@ function subsetsWithDup(nums: number[]): number[][] {
         continue;
       }
 
-      path.push(sorted[i]);
+      path.push(sorted[i]!);
       backtrack(i + 1);
       path.pop();
     }

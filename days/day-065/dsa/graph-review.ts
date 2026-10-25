@@ -8,10 +8,10 @@ function bfs(graph: Graph, start: number): number[] {
   let head = 0;
 
   while (head < queue.length) {
-    const node = queue[head++];
+    const node = queue[head++]!;
     result.push(node);
 
-    for (const neighbor of graph[node]) {
+    for (const neighbor of graph[node]!) {
       if (!visited.has(neighbor)) {
         visited.add(neighbor);
         queue.push(neighbor);
@@ -35,8 +35,8 @@ function dfs(graph: Graph, start: number): number[] {
     visited.add(node);
     result.push(node);
 
-    for (let i = graph[node].length - 1; i >= 0; i--) {
-      const neighbor = graph[node][i];
+    for (let i = graph[node]!.length - 1; i >= 0; i--) {
+      const neighbor = graph[node]![i]!;
 
       if (!visited.has(neighbor)) {
         stack.push(neighbor);
@@ -53,8 +53,16 @@ function topologicalSort(numCourses: number, prerequisites: number[][]): number[
   const indegree = Array(numCourses).fill(0);
 
   for (const [course, prerequisite] of prerequisites) {
-    graph[prerequisite].push(course);
-    indegree[course]++;
+    if (
+      course === undefined ||
+      prerequisite === undefined ||
+      !graph[prerequisite] ||
+      !graph[course]
+    ) {
+      throw new RangeError('Invalid course dependency');
+    }
+    graph[prerequisite]!.push(course);
+    indegree[course] = indegree[course]! + 1;
   }
 
   const queue: number[] = [];
@@ -67,10 +75,10 @@ function topologicalSort(numCourses: number, prerequisites: number[][]): number[
   let head = 0;
 
   while (head < queue.length) {
-    const node = queue[head++];
+    const node = queue[head++]!;
     order.push(node);
 
-    for (const next of graph[node]) {
+    for (const next of graph[node]!) {
       indegree[next]--;
 
       if (indegree[next] === 0) {

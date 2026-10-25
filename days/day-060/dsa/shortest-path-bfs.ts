@@ -6,13 +6,13 @@ function shortestPath(graph: number[][], start: number, target: number): number 
   distance[start] = 0;
 
   while (head < queue.length) {
-    const node = queue[head++];
+    const node = queue[head++]!;
 
     if (node === target) {
       return distance[node];
     }
 
-    for (const neighbor of graph[node]) {
+    for (const neighbor of graph[node]!) {
       if (distance[neighbor] === -1) {
         distance[neighbor] = distance[node] + 1;
         queue.push(neighbor);

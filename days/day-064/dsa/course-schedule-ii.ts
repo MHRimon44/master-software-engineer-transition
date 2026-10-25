@@ -4,8 +4,16 @@ function findOrder(numCourses: number, prerequisites: number[][]): number[] {
   const indegree = new Array<number>(numCourses).fill(0);
 
   for (const [course, prerequisite] of prerequisites) {
-    graph[prerequisite].push(course);
-    indegree[course]++;
+    if (
+      course === undefined ||
+      prerequisite === undefined ||
+      !graph[prerequisite] ||
+      !graph[course]
+    ) {
+      throw new RangeError('Invalid course dependency');
+    }
+    graph[prerequisite]!.push(course);
+    indegree[course] = indegree[course]! + 1;
   }
 
   const queue: number[] = [];
@@ -20,11 +28,11 @@ function findOrder(numCourses: number, prerequisites: number[][]): number[] {
   let head = 0;
 
   while (head < queue.length) {
-    const current = queue[head++];
+    const current = queue[head++]!;
     order.push(current);
 
-    for (const next of graph[current]) {
-      indegree[next]--;
+    for (const next of graph[current]!) {
+      indegree[next] = indegree[next]! - 1;
 
       if (indegree[next] === 0) {
         queue.push(next);
@@ -40,16 +48,19 @@ function isValidOrder(numCourses: number, prerequisites: number[][], order: numb
 
   const position = new Map<number, number>();
 
-  for (let i = 0; i < order.length; i++) {
-    if (order[i] < 0 || order[i] >= numCourses || position.has(order[i])) {
+  for (const [i, course] of order.entries()) {
+    if (course < 0 || course >= numCourses || position.has(course)) {
       return false;
     }
 
-    position.set(order[i], i);
+    position.set(course, i);
   }
 
   return prerequisites.every(
-    ([course, prerequisite]) => position.get(prerequisite)! < position.get(course)!,
+    ([course, prerequisite]) =>
+      course !== undefined &&
+      prerequisite !== undefined &&
+      position.get(prerequisite)! < position.get(course)!,
   );
 }
 

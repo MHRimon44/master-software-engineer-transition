@@ -4,7 +4,7 @@ function hasCycle(graph: number[][]): boolean {
   function dfs(node: number, parent: number): boolean {
     visited.add(node);
 
-    for (const neighbor of graph[node]) {
+    for (const neighbor of graph[node]!) {
       if (!visited.has(neighbor)) {
         if (dfs(neighbor, node)) {
           return true;

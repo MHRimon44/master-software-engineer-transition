@@ -13,7 +13,7 @@ function permute(nums: number[]): number[][] {
       if (used[i]) continue;
 
       used[i] = true;
-      path.push(nums[i]);
+      path.push(nums[i]!);
 
       backtrack();
 

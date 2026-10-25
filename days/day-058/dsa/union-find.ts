@@ -9,11 +9,14 @@ class UnionFind {
 
   // Find the root of a node
   find(x: number): number {
-    if (this.parent[x] !== x) {
-      this.parent[x] = this.find(this.parent[x]);
+    const parent = this.parent[x];
+    if (parent === undefined) throw new RangeError(`Invalid node: ${x}`);
+
+    if (parent !== x) {
+      this.parent[x] = this.find(parent);
     }
 
-    return this.parent[x];
+    return this.parent[x]!;
   }
 
   // Connect two groups
@@ -26,12 +29,12 @@ class UnionFind {
     }
 
     // Attach smaller group to larger group
-    if (this.size[rootA] < this.size[rootB]) {
+    if (this.size[rootA]! < this.size[rootB]!) {
       [rootA, rootB] = [rootB, rootA];
     }
 
     this.parent[rootB] = rootA;
-    this.size[rootA] += this.size[rootB];
+    this.size[rootA] = this.size[rootA]! + this.size[rootB]!;
 
     return true;
   }

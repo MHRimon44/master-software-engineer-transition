@@ -6,7 +6,7 @@ function subsets(nums: number[]): number[][] {
     result.push([...path]);
 
     for (let i = start; i < nums.length; i++) {
-      path.push(nums[i]);
+      path.push(nums[i]!);
 
       backtrack(i + 1);
 
