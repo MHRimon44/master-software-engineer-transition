@@ -11,5 +11,8 @@
   },
   "devDependencies": {
     "prettier": "^3.9.10"
+  },
+  "dependencies": {
+    "node-crypto": "^1.0.0"
   }
 }
