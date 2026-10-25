@@ -7,3 +7,4 @@ node_modules/
 **/coverage/
 common/nest/.env
 days/day-042/postgresql/backups/
+**/.env
