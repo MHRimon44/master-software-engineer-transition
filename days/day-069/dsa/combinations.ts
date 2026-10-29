@@ -1,3 +1,5 @@
+export {};
+
 function combine(n: number, k: number): number[][] {
   const result: number[][] = [];
   const current: number[] = [];
